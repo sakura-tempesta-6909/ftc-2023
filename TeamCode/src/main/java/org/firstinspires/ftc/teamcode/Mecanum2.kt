@@ -77,7 +77,10 @@ class Mecanum2 {
                 rightRear.power = rearRightPower
 
 
-
+                telemetry.addData("leftFront",frontLeftPower)
+                telemetry.addData("leftRear",rearLeftPower)
+                telemetry.addData("rightFront",frontRightPower)
+                telemetry.addData("rightRear",rearRightPower)
                 telemetry.addData("Mecanum2", "running")
                 telemetry.addData("IMU Yaw Angle", botHeading)
                 telemetry.update()

@@ -47,25 +47,15 @@ class Arm {
             while (opModeIsActive()) {
                 // アームの上下動の制御
                 if (gamepad1.dpad_up) {
-
-                    if (armMotor.currentPosition < 150){
-                        armMotor.targetPosition = 680.coerceIn(armLimitMin, armLimitMax)
-                        armMotor.power = 0.2
-                    }else if (armMotor.currentPosition < 680){
                         armMotor.targetPosition = 680.coerceIn(armLimitMin, armLimitMax)
                         armMotor.power = 0.2
 
                         armEndServo.position = 0.7.coerceIn(0.0, 1.0)
-                    }
-
                 }else if (gamepad1.dpad_down) {
-                    if (armMotor.currentPosition > 10){
                         armMotor.targetPosition = 10.coerceIn(armLimitMin, armLimitMax)
                         armMotor.power = 0.2
-                    }
-                    if (armEndServo.position > 0.0) {
+
                         armEndServo.position = 0.0.coerceIn(0.0, 1.0)
-                    }
                 }
 
                 // ホルダーの制御

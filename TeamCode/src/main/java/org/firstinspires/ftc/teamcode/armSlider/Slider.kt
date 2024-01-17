@@ -46,7 +46,7 @@ class Slider : LinearOpMode() {
         rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
 
         while (opModeIsActive()) {
-            if (gamepad1.a){
+            if (gamepad1.dpad_down){
 
                 val newLeftTarget = 500
                 val newRightTarget = 500
@@ -57,7 +57,7 @@ class Slider : LinearOpMode() {
                 leftSlider.power = 0.5
                 rightSlider.power = 0.5
 
-            }else if (gamepad1.b){
+            }else if (gamepad1.dpad_up){
 
                 val newLeftTarget = 2000
                 val newRightTarget = 2000
