@@ -59,8 +59,8 @@ class Slider : LinearOpMode() {
 
             }else if (gamepad1.b){
 
-                val newLeftTarget = 3500
-                val newRightTarget = 3500
+                val newLeftTarget = 2000
+                val newRightTarget = 2000
 
                 leftSlider.targetPosition = newLeftTarget.coerceIn(sliderLimitMin, sliderLimitMax)
                 rightSlider.targetPosition = newRightTarget.coerceIn(sliderLimitMin, sliderLimitMax)
@@ -68,32 +68,6 @@ class Slider : LinearOpMode() {
                 leftSlider.power = 0.5
                 rightSlider.power = 0.5
 
-            }
-//            else if (gamepad1.x) {
-//                val newLeftTarget = leftSlider.targetPosition + 50
-//                val newRightTarget = rightSlider.targetPosition + 50
-//
-//                leftSlider.targetPosition = newLeftTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-//                rightSlider.targetPosition = newRightTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-//
-//                leftSlider.power = 0.5
-//                rightSlider.power = 0.5
-//
-//            } else if (gamepad1.y) {
-//                val newLeftTarget = leftSlider.targetPosition - 50
-//                val newRightTarget = rightSlider.targetPosition - 50
-//
-//                leftSlider.targetPosition = newLeftTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-//                rightSlider.targetPosition = newRightTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-//
-//                leftSlider.power = 0.5
-//                rightSlider.power = 0.5
-//
-//            }
-
-            else {
-                leftSlider.power = 0.0
-                rightSlider.power = 0.0
             }
 
             // 現在の位置をテレメトリに表示

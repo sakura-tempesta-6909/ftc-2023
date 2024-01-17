@@ -12,20 +12,22 @@ class Arm {
         //DCモーターの可動領域の設定
 
         private val armLimitMin = 10
-        private val armLimitMax = 800
+        private val armLimitMax = 700
 
         @Throws(InterruptedException::class)
         override fun runOpMode() {
-        //モーターの初期設定
+            //モーターの初期設定
 
             val armMotor: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_3")
             armMotor.direction = DcMotorSimple.Direction.FORWARD
             armMotor.power = 0.0
 
-            val armEndServo: Servo = hardwareMap.get(Servo::class.java, "servo_1")
-            val holderServo: Servo = hardwareMap.get(Servo::class.java, "servo_0")
+            val armEndServo: Servo = hardwareMap.get(Servo::class.java, "servo_0")
+            val holderServo: Servo = hardwareMap.get(Servo::class.java, "servo_1")
+
 
             waitForStart()
+
 
             armMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             armMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
@@ -34,41 +36,53 @@ class Arm {
             telemetry.update()
 
             armMotor.targetPosition = 0
-            armEndServo.position = 0.5
-            holderServo.position = 0.5
+            armEndServo.position = 0.0
+            holderServo.position = 0.0
+
+            armMotor.targetPosition = 300
+            armMotor.power = 0.5
 
             armMotor.mode = DcMotor.RunMode.RUN_TO_POSITION
 
             while (opModeIsActive()) {
                 // アームの上下動の制御
                 if (gamepad1.dpad_up) {
-                    val newArmTarget = armMotor.targetPosition + 10
-                    armMotor.targetPosition = newArmTarget.coerceIn(armLimitMin, armLimitMax)
-                    armMotor.power = 0.5
-                } else if (gamepad1.dpad_down) {
-                    val newArmTarget = armMotor.targetPosition - 10
-                    armMotor.targetPosition = newArmTarget.coerceIn(armLimitMin, armLimitMax)
-                    armMotor.power = 0.5
+
+                    if (armMotor.currentPosition < 150){
+                        armMotor.targetPosition = 680.coerceIn(armLimitMin, armLimitMax)
+                        armMotor.power = 0.2
+                    }else if (armMotor.currentPosition < 680){
+                        armMotor.targetPosition = 680.coerceIn(armLimitMin, armLimitMax)
+                        armMotor.power = 0.2
+
+                        armEndServo.position = 0.7.coerceIn(0.0, 1.0)
+                    }
+
+                }else if (gamepad1.dpad_down) {
+                    if (armMotor.currentPosition > 10){
+                        armMotor.targetPosition = 10.coerceIn(armLimitMin, armLimitMax)
+                        armMotor.power = 0.2
+                    }
+                    if (armEndServo.position > 0.0) {
+                        armEndServo.position = 0.0.coerceIn(0.0, 1.0)
+                    }
                 }
 
-                // サーボの回転制御
-                if (gamepad1.dpad_left) {
-                    armEndServo.position += 0.05.coerceIn(0.0, 1.0)
-                } else if (gamepad1.dpad_right) {
-                    armEndServo.position -= 0.05.coerceIn(0.0, 1.0)
-                }
-
-                // サーボの増減量の制御
+                // ホルダーの制御
                 if (gamepad1.x) {
-                    holderServo.position += 0.05.coerceIn(0.0, 1.0)
-                }else if (gamepad1.y) {
-                    holderServo.position -= 0.05.coerceIn(0.0, 1.0)
+                    //しまる
+                    holderServo.position = 0.7.coerceIn(0.0, 1.0)
+                } else if (gamepad1.y) {
+                    //開く
+                    holderServo.position = 0.0.coerceIn(0.0, 1.0)
                 }
 
-                telemetry.addData("アームの位置",armMotor.currentPosition)
-                telemetry.addData("アームの目標",armMotor.targetPosition)
-                telemetry.addData("回転サーボ",armEndServo.position)
-                telemetry.addData("ホルダー",holderServo.position)
+
+
+                telemetry.addData("アームの位置", armMotor.currentPosition)
+                telemetry.addData("アームの目標", armMotor.targetPosition)
+                telemetry.addData("回転サーボ", armEndServo.position)
+                telemetry.addData("ホルダー", holderServo.position)
                 telemetry.update()
 
             }

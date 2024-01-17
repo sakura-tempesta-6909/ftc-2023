@@ -18,17 +18,18 @@ class Mecanum2 {
         override fun runOpMode() {
 
             // モーターの初期化
-            val leftFront: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_0")
+            val leftFront: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_0")
             leftFront.direction = DcMotorSimple.Direction.FORWARD
             val leftRear: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_2")
             leftRear.direction = DcMotorSimple.Direction.FORWARD
-            val rightFront: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_0")
+            val rightFront: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_1")
             rightFront.direction = DcMotorSimple.Direction.REVERSE
-            val rightRear: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_1")
+            val rightRear: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_3")
             rightRear.direction = DcMotorSimple.Direction.REVERSE
 
             // IMU（慣性計測装置）の初期化
             val imu = hardwareMap.get(IMU::class.java, "imu")
+            imu.resetYaw()
 
             val parameters = IMU.Parameters(
                 RevHubOrientationOnRobot(
@@ -40,6 +41,7 @@ class Mecanum2 {
             imu.initialize(parameters)
             waitForStart()
             if (isStopRequested) return
+
 
             while (opModeIsActive()) {
 
@@ -56,25 +58,28 @@ class Mecanum2 {
                 val botHeading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
 
                 // Field Centric座標系に変換
-                var rotX = x * cos(-botHeading) - y * sin(-botHeading)
-                val rotY = x * sin(-botHeading) + y * cos(-botHeading)
-                rotX *= 1.1 // 不完全な横移動を補正
+                val rotX = x * cos(botHeading) + y * sin(botHeading)
+                val rotY = - x * sin(botHeading) + y * cos(botHeading)
 
                 // パワーの正規化
                 val denominator =
-                    (abs(rotY) + abs(rotX) + abs(rx)).coerceAtLeast(1.0)
-                val frontLeftPower = (rotY + rotX + rx) / denominator
-                val backLeftPower = (rotY - rotX + rx) / denominator
-                val frontRightPower = (rotY - rotX - rx) / denominator
-                val backRightPower = (rotY + rotX - rx) / denominator
+                        (abs(rotY) + abs(rotX) + abs(rx)).coerceAtLeast(1.0)
+
+                val frontLeftPower = (rotY - rotX - rx) / denominator
+                val frontRightPower = (rotY + rotX + rx) / denominator
+                val rearLeftPower = (rotY + rotX - rx) / denominator
+                val rearRightPower = (rotY - rotX + rx) / denominator
 
                 // モーターパワーをセット
                 leftFront.power = frontLeftPower
-                leftRear.power = backLeftPower
+                leftRear.power = rearLeftPower
                 rightFront.power = frontRightPower
-                rightRear.power = backRightPower
+                rightRear.power = rearRightPower
+
+
 
                 telemetry.addData("Mecanum2", "running")
+                telemetry.addData("IMU Yaw Angle", botHeading)
                 telemetry.update()
             }
         }
