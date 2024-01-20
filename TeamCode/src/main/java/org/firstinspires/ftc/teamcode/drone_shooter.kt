@@ -24,6 +24,8 @@ class drone_shooter : LinearOpMode() {
              }
 
             telemetry.addData("servoPosition",droneShooter.position)
+            telemetry.addData("servoDirection",droneShooter.direction)
+            telemetry.update()
         }
     }
 }
