@@ -1,21 +1,17 @@
 package org.firstinspires.ftc.teamcode
 
-import org.firstinspires.ftc.teamcode.Mecanum.LinearTeleop
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import org.firstinspires.ftc.teamcode.armSlider.ArmSlider
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import com.qualcomm.robotcore.hardware.IMU
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 
 @TeleOp(name = "all")
 class all : LinearOpMode() {
-
-    // アームおよびスライダーの制御に関する定数
-//    private val armLimitMin = 0
-//    private val armLimitMax = 700
-//    private val sliderLimitMin: Int = 0
-//    private val sliderLimitMax: Int = 2100
 
     // ハードウェアの宣言
     private lateinit var armMotor: DcMotor
@@ -27,7 +23,7 @@ class all : LinearOpMode() {
     private lateinit var leftRear: DcMotor
     private lateinit var rightFront: DcMotor
     private lateinit var rightRear: DcMotor
-
+    private lateinit var imu:IMU
     private fun initializeHardware() {
         // アーム関連のハードウェア初期化
         armMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_3")
@@ -56,6 +52,19 @@ class all : LinearOpMode() {
         rightFront.direction = DcMotorSimple.Direction.REVERSE
         rightRear = hardwareMap.get(DcMotor::class.java, "motor_3")
         rightRear.direction = DcMotorSimple.Direction.REVERSE
+
+        // IMU（慣性計測装置）の初期化
+        imu = hardwareMap.get(IMU::class.java, "imu")
+        imu.resetYaw()
+
+        val parameters = IMU.Parameters(
+                RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                )
+        )
+        imu.initialize(parameters)
+
     }
 
     fun initializeArm() {
@@ -105,10 +114,12 @@ class all : LinearOpMode() {
             val dpad_down = gamepad1.dpad_down
             val gamepad_x = gamepad1.x
             val gamepad_y = gamepad1.y
+            val start = gamepad1.start
             // 各機能の制御
             ArmSlider.controlArmSlider(dpad_up, dpad_down, armMotor, leftSlider, rightSlider, armEndServo)
             ArmSlider.controlHolder(gamepad_x, gamepad_y, holderServo)
-            Mecanum.driveMecanum(leftFront, leftRear, rightFront, rightRear, x, y, rx)
+            FieldCentricMecanumTeleOp.driveMecanum(leftFront, leftRear, rightFront, rightRear,imu,x,y,rx,start)
+
             telemetry.addData("Mode", "running")
             telemetry.addData("ArmLeftSliderPosition", leftSlider.currentPosition)
             telemetry.addData("ArmLeftSliderTarget", leftSlider.targetPosition)
@@ -117,6 +128,12 @@ class all : LinearOpMode() {
             telemetry.addData("RightSliderMotorPower",rightSlider.power)
             telemetry.addData("LeftSliderMotorPower",leftSlider.power)
             telemetry.addData("ArmMotorPower",armMotor.power)
+            telemetry.addData("leftFront",leftFront.power)
+            telemetry.addData("leftRear",leftRear.power)
+            telemetry.addData("rightFront",rightFront.power)
+            telemetry.addData("rightRear",rightRear.power)
+            telemetry.addData("Mecanum2", "running")
+            telemetry.addData("IMU Yaw Angle", imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS))
             telemetry.update()
         }
     }

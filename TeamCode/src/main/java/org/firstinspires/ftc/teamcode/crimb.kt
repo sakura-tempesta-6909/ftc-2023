@@ -14,6 +14,10 @@ class crimb : LinearOpMode() {
     private val sliderLimitMax: Int = 2400
 
     override fun runOpMode() {
+        val armMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_3")
+        armMotor.direction = DcMotorSimple.Direction.FORWARD
+        armMotor.power = 0.0
+
         val leftSlider: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_1")
         leftSlider.direction = DcMotorSimple.Direction.REVERSE
 

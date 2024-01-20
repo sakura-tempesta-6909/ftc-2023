@@ -15,7 +15,7 @@ class Mecanum {
                 rightRear: DcMotor,
                 x: Float,
                 y: Float,
-                rx: Float
+                rx: Float,
         ) {
             val rotX = x
             val rotY = y

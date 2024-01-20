@@ -37,9 +37,10 @@ class Mecanum2 {
                     RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
                 )
             )
-
             imu.initialize(parameters)
+
             waitForStart()
+
             if (isStopRequested) return
 
 

@@ -67,8 +67,6 @@ class Arm {
                     holderServo.position = 0.0.coerceIn(0.0, 1.0)
                 }
 
-
-
                 telemetry.addData("アームの位置", armMotor.currentPosition)
                 telemetry.addData("アームの目標", armMotor.targetPosition)
                 telemetry.addData("回転サーボ", armEndServo.position)

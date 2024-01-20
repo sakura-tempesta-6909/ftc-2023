@@ -30,8 +30,8 @@ class ArmSlider : LinearOpMode() {
                 leftSlider.targetPosition = 2000.coerceIn(0, 2100)
                 rightSlider.targetPosition = 2000.coerceIn(0, 2100)
 
-                leftSlider.power = 0.5
-                rightSlider.power = 0.5
+                leftSlider.power = 0.7
+                rightSlider.power = 0.7
 
                 if (armMotor.currentPosition > 300) {
                     armEndServo.position = 0.7.coerceIn(0.0, 1.0)
@@ -44,8 +44,8 @@ class ArmSlider : LinearOpMode() {
                 leftSlider.targetPosition = 0.coerceIn(0, 2100)
                 rightSlider.targetPosition = 0.coerceIn(0, 2100)
 
-                leftSlider.power = 0.5
-                rightSlider.power = 0.5
+                leftSlider.power = 0.7
+                rightSlider.power = 0.7
 
                 if (armMotor.currentPosition > 300) {
                     armEndServo.position = 0.0.coerceIn(0.0, 1.0)
