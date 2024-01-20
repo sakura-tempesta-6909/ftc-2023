@@ -35,6 +35,7 @@ import org.firstinspires.ftc.teamcode.component.Arm
 import org.firstinspires.ftc.teamcode.component.Component
 import org.firstinspires.ftc.teamcode.component.Drive
 import org.firstinspires.ftc.teamcode.component.Slider
+import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
 
@@ -82,10 +83,12 @@ class Main : OpMode() {
         }
         //操作関連コマンド
         if (gamepad1.dpad_up) {
+            state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = Const.Slider.Position.top
             state.rightSliderTargetPosition = Const.Slider.Position.top
             state.sliderPower = Const.Slider.Speed.targetToPosition
         } else if (gamepad1.dpad_down) {
+            state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = 0
             state.rightSliderTargetPosition = 0
             state.sliderPower = Const.Slider.Speed.targetToPosition
@@ -94,6 +97,9 @@ class Main : OpMode() {
         components.forEach { component ->
             component.applyState(state)
         }
+        telemetry.addData("target",state.rightSliderTargetPosition)
+        telemetry.addData("power",state.sliderPower)
+        telemetry.addData("current",state.rightSliderCurrentPosition)
     }
 
     /*

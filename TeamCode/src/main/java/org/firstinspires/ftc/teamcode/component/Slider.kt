@@ -19,8 +19,10 @@ class Slider(hardwareMap: HardwareMap) : Component {
         leftSlider.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         rightSlider.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
 
-        leftSlider.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        rightSlider.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        leftSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
+        rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+
     }
 
     override fun autonomousInit() {
@@ -45,7 +47,7 @@ class Slider(hardwareMap: HardwareMap) : Component {
     }
 
     private fun moveSliderToPosition(rightSliderTarget: Int, leftSliderTarget: Int, sliderPower: Double) {
-        if (rightSlider.currentPosition < Const.Slider.tolerance && leftSlider.currentPosition < Const.Slider.tolerance) {
+        if (rightSliderTarget == 0 && leftSliderTarget == 0 && rightSlider.currentPosition < Const.Slider.tolerance && leftSlider.currentPosition < Const.Slider.tolerance) {
             rightSlider.power = 0.0
             leftSlider.power = 0.0
         } else {
