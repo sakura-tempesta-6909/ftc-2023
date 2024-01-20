@@ -108,7 +108,7 @@ class all : LinearOpMode() {
         while (opModeIsActive()) {
             val x = gamepad1.left_stick_x // 左右反転する場合は - を削除
             val y = gamepad1.left_stick_y // 上下反転する場合は - を削除
-            val rx = gamepad1.right_stick_x // 左右反転する場合は - を削除
+            val rx = - gamepad1.right_stick_x // 左右反転する場合は - を削除
 
             val dpad_up = gamepad1.dpad_up
             val dpad_down = gamepad1.dpad_down
