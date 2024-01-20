@@ -8,6 +8,7 @@ class motor {
 
     @TeleOp(name = "motor")
     class LinearTeleop : LinearOpMode() {
+
         override fun runOpMode() {
             val leftFront: DcMotor = hardwareMap.get(DcMotor::class.java, "motor_0")
             leftFront.direction = DcMotorSimple.Direction.REVERSE

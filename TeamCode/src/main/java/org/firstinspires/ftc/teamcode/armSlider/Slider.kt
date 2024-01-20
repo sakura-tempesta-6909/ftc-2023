@@ -9,18 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 
 class Slider : LinearOpMode() {
 
-    private val sliderLimitMin: Int = 500
-    private val sliderLimitMax: Int = 3500
-
     override fun runOpMode() {
-        val leftSlider: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_1")
+        val leftSlider: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_0")
         leftSlider.direction = DcMotorSimple.Direction.REVERSE
 
-        val rightSlider: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_2")
+        val rightSlider: DcMotor = hardwareMap.get(DcMotor::class.java, "ex-motor_1")
         rightSlider.direction = DcMotorSimple.Direction.FORWARD
-
-        leftSlider.power = 0.0
-        rightSlider.power = 0.0
 
         waitForStart()
 
@@ -32,43 +26,7 @@ class Slider : LinearOpMode() {
         telemetry.addData("Mode", "running")
         telemetry.update()
 
-        // 初期位置を2000に設定
-        while ((leftSlider.currentPosition < 2000 || rightSlider.currentPosition < 2000)) {
-            leftSlider.targetPosition = 2000
-            rightSlider.targetPosition = 2000
-
-            leftSlider.power = 0.5
-            rightSlider.power = 0.5
-        }
-
-
-        leftSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
-        rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
-
         while (opModeIsActive()) {
-            if (gamepad1.dpad_down){
-
-                val newLeftTarget = 500
-                val newRightTarget = 500
-
-                leftSlider.targetPosition = newLeftTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-                rightSlider.targetPosition = newRightTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-
-                leftSlider.power = 0.5
-                rightSlider.power = 0.5
-
-            }else if (gamepad1.dpad_up){
-
-                val newLeftTarget = 2000
-                val newRightTarget = 2000
-
-                leftSlider.targetPosition = newLeftTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-                rightSlider.targetPosition = newRightTarget.coerceIn(sliderLimitMin, sliderLimitMax)
-
-                leftSlider.power = 0.5
-                rightSlider.power = 0.5
-
-            }
 
             // 現在の位置をテレメトリに表示
             telemetry.addData("左モーターの位置", leftSlider.currentPosition)
