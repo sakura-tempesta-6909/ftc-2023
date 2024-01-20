@@ -32,7 +32,7 @@ class Const {
         //モーターの速度
         class Speed {
             companion object {
-                const val targetToPosition = 0.3
+                const val targetToPosition = 0.5
             }
         }
         class Position{
