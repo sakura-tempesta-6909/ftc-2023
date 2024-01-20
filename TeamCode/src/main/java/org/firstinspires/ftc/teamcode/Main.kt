@@ -38,6 +38,7 @@ import org.firstinspires.ftc.teamcode.component.Slider
 import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
+import org.firstinspires.ftc.teamcode.subClass.Util
 
 
 @TeleOp(name = "Main OpMode", group = "Main")
@@ -97,9 +98,8 @@ class Main : OpMode() {
         components.forEach { component ->
             component.applyState(state)
         }
-        telemetry.addData("target",state.rightSliderTargetPosition)
-        telemetry.addData("power",state.sliderPower)
-        telemetry.addData("current",state.rightSliderCurrentPosition)
+        //数値を出力
+        Util.sendLog(state, telemetry)
     }
 
     /*
