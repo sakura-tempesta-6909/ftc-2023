@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
 
-@TeleOp(name =  "all")
+@TeleOp(name = "all")
 class all : LinearOpMode() {
 
     // アームおよびスライダーの制御に関する定数
@@ -89,17 +89,11 @@ class all : LinearOpMode() {
     }
 
 
-
-
     override fun runOpMode() {
 
         initializeHardware()
         initializeArm()
         initializeSlider()
-
-
-
-
         waitForStart()
 
         while (opModeIsActive()) {
@@ -116,6 +110,10 @@ class all : LinearOpMode() {
             ArmSlider.controlHolder(gamepad_x, gamepad_y, holderServo)
             Mecanum.driveMecanum(leftFront, leftRear, rightFront, rightRear, x, y, rx)
             telemetry.addData("Mode", "running")
+            telemetry.addData("ArmLeftSliderPosition", leftSlider.currentPosition)
+            telemetry.addData("ArmLeftSliderTarget", leftSlider.targetPosition)
+            telemetry.addData("ArmRightSliderPosition", rightSlider.currentPosition)
+            telemetry.addData("ArmRightSliderTarget", rightSlider.targetPosition)
             telemetry.update()
         }
     }
