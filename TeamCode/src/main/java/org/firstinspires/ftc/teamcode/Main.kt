@@ -31,25 +31,38 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.component.Component
+import org.firstinspires.ftc.teamcode.component.Slider
+import org.firstinspires.ftc.teamcode.state.State
+import org.firstinspires.ftc.teamcode.subClass.Const
+
 
 @TeleOp(name = "Main OpMode", group = "Main")
 class Main : OpMode() {
     private val runtime = ElapsedTime()
+    private val components = ArrayList<Component>()
+    private val state = State()
+
     override fun init() {
-        telemetry.addData("Status", "Initialized")
+        telemetry.addData("Status", "Initializing")
+        components.add(Slider(hardwareMap))
+        state.stateInit()
         telemetry.addData("Status", "Initialized")
     }
 
     /*
      * ドライバーがINITを押した後、PLAYを押す前に繰り返し実行するコード
      */
-    override fun init_loop() {}
+    override fun init_loop() {
+
+    }
 
     /*
      * 開始時に一度だけ実行される
      */
     override fun start() {
         runtime.reset()
+        state.stateInit()
     }
 
     /*
@@ -58,6 +71,25 @@ class Main : OpMode() {
      */
     override fun loop() {
         telemetry.addData("Status", "Run Time: $runtime")
+        state.stateReset()
+        //センサーの値の取得
+        components.forEach { component ->
+            component.readSensors(state)
+        }
+        //操作関連コマンド
+        if (gamepad1.dpad_up) {
+            state.leftSliderTargetPosition = Const.Slider.Position.top
+            state.rightSliderTargetPosition = Const.Slider.Position.top
+            state.sliderPower = Const.Slider.Speed.targetToPosition
+        } else if (gamepad1.dpad_down) {
+            state.leftSliderTargetPosition = 0
+            state.rightSliderTargetPosition = 0
+            state.sliderPower = Const.Slider.Speed.targetToPosition
+        }
+        //Stateを適用
+        components.forEach { component ->
+            component.applyState(state)
+        }
     }
 
     /*
