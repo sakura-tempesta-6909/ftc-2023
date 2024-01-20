@@ -31,7 +31,9 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.component.Arm
 import org.firstinspires.ftc.teamcode.component.Component
+import org.firstinspires.ftc.teamcode.component.Drive
 import org.firstinspires.ftc.teamcode.component.Slider
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
@@ -46,6 +48,8 @@ class Main : OpMode() {
     override fun init() {
         telemetry.addData("Status", "Initializing")
         components.add(Slider(hardwareMap))
+        components.add(Drive(hardwareMap))
+        components.add(Arm(hardwareMap))
         state.stateInit()
         telemetry.addData("Status", "Initialized")
     }
