@@ -94,6 +94,11 @@ class Main : OpMode() {
             state.rightSliderTargetPosition = 0
             state.sliderPower = Const.Slider.Speed.targetToPosition
         }
+        if (gamepad1.x){
+            state.holderIsOpen = true
+        }else if(gamepad1.y){
+            state.holderIsOpen = false
+        }
         //Stateを適用
         components.forEach { component ->
             component.applyState(state)

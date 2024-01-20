@@ -9,6 +9,9 @@ class State() {
     var rightSliderTargetPosition = 0
     var rightSliderCurrentPosition = 0
     var sliderPower = 0.0
+    var holderIsOpen = false
+    var armIsUp = true
+    var holderIsUpward = false
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -17,6 +20,9 @@ class State() {
         rightSliderTargetPosition = 0
         rightSliderCurrentPosition = 0
         sliderPower = 0.0
+        holderIsOpen = false
+        armIsUp = true
+        holderIsUpward = false
     }
 
     fun stateReset() {

@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.subClass
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import java.util.logging.Level
+import com.qualcomm.robotcore.hardware.Servo
 
 class Const {
     class Slider {
@@ -35,10 +34,34 @@ class Const {
                 const val targetToPosition = 0.5
             }
         }
-        class Position{
-            companion object{
+
+        class Position {
+            companion object {
                 const val top = 2000
             }
+        }
+    }
+
+    class Arm {
+        class Motor {
+            class Name {
+                companion object {
+                    const val holder = "servo_1"
+                }
+            }
+
+            class Direction {
+                companion object {
+                    val holder = Servo.Direction.FORWARD
+                }
+            }
+
+            class State{
+                companion object{
+                    const val holderIsOpen = 0.0
+                }
+            }
+
         }
     }
 }

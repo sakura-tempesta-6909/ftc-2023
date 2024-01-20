@@ -11,6 +11,7 @@ class Slider(hardwareMap: HardwareMap) : Component {
     private var rightSlider: DcMotor
 
     init {
+
         leftSlider = hardwareMap.get(DcMotor::class.java, Const.Slider.Motor.Name.Left)
         rightSlider = hardwareMap.get(DcMotor::class.java, Const.Slider.Motor.Name.Right)
 
@@ -21,7 +22,6 @@ class Slider(hardwareMap: HardwareMap) : Component {
 
         leftSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
         rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
-
 
     }
 
