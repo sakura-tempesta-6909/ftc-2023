@@ -114,6 +114,9 @@ class all : LinearOpMode() {
             telemetry.addData("ArmLeftSliderTarget", leftSlider.targetPosition)
             telemetry.addData("ArmRightSliderPosition", rightSlider.currentPosition)
             telemetry.addData("ArmRightSliderTarget", rightSlider.targetPosition)
+            telemetry.addData("RightSliderMotorPower",rightSlider.power)
+            telemetry.addData("LeftSliderMotorPower",leftSlider.power)
+            telemetry.addData("ArmMotorPower",armMotor.power)
             telemetry.update()
         }
     }
