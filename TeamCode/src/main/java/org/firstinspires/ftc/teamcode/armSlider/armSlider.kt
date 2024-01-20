@@ -50,6 +50,10 @@ class ArmSlider : LinearOpMode() {
                 if (armMotor.currentPosition > 300) {
                     armEndServo.position = 0.0.coerceIn(0.0, 1.0)
                 }
+
+            }else if (leftSlider.currentPosition < 10){
+                leftSlider.power = 0.0
+                rightSlider.power = 0.0
             }
         }
 
