@@ -9,6 +9,9 @@ class Util {
             telemetry.addData("target", state.rightSliderTargetPosition)
             telemetry.addData("power", state.sliderPower)
             telemetry.addData("current", state.rightSliderCurrentPosition)
+            telemetry.addData("holderIsOpen", state.holderIsOpen.toString())
+            telemetry.addData("liftIsUp",state.liftIsUp)
+            telemetry.addData("liftCurrentPosition",state.liftCurrentPosition)
         }
     }
 }

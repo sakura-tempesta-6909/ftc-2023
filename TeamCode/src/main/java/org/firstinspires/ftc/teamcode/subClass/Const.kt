@@ -31,7 +31,7 @@ class Const {
         //モーターの速度
         class Speed {
             companion object {
-                const val targetToPosition = 0.5
+                const val targetToPosition = 0.7
             }
         }
 
@@ -47,20 +47,26 @@ class Const {
             class Name {
                 companion object {
                     const val holder = "servo_1"
+                    const val lift = "ex-motor_3"
+                    const val flip = "servo_0"
                 }
             }
 
             class Direction {
                 companion object {
+                    val lift = DcMotorSimple.Direction.FORWARD
                     val holder = Servo.Direction.FORWARD
+                    val flip = Servo.Direction.FORWARD
                 }
             }
 
-            class State{
+            class Position{
                 companion object{
-                    const val holderIsOpen = true
+                    const val liftUpperLimit =680
                 }
             }
+
+
 
         }
     }

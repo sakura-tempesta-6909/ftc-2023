@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.state
 
-import com.qualcomm.robotcore.hardware.Gamepad
-
 class State() {
     var sliderState: SliderStates = SliderStates.Disable
     var leftSliderTargetPosition = 0
@@ -10,8 +8,9 @@ class State() {
     var rightSliderCurrentPosition = 0
     var sliderPower = 0.0
     var holderIsOpen = false
-    var armIsUp = true
-    var holderIsUpward = false
+    var liftIsUp = false
+    var liftCurrentPosition = 0
+    var flipIsUpward = false
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -21,8 +20,9 @@ class State() {
         rightSliderCurrentPosition = 0
         sliderPower = 0.0
         holderIsOpen = false
-        armIsUp = true
-        holderIsUpward = false
+        liftIsUp = false
+        liftCurrentPosition = 0
+        flipIsUpward = false
     }
 
     fun stateReset() {

@@ -5,41 +5,76 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
+import kotlin.math.abs
 
 class Arm(hardwareMap: HardwareMap) : Component {
-    private lateinit var arm:DcMotor
-    private var holder:Servo
+    private var lift: DcMotor
+    private var holder: Servo
+    private var flip:Servo
+
+
     init {
-        holder = hardwareMap.get(Servo::class.java,Const.Arm.Motor.Name.holder)
+        lift = hardwareMap.get(DcMotor::class.java, Const.Arm.Motor.Name.lift)
+        holder = hardwareMap.get(Servo::class.java, Const.Arm.Motor.Name.holder)
+        flip = hardwareMap.get(Servo::class.java,Const.Arm.Motor.Name.flip)
+
+        lift.direction = Const.Arm.Motor.Direction.lift
+        lift.power = 0.0
+        lift.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        lift.targetPosition = 0
+        lift.mode = DcMotor.RunMode.RUN_TO_POSITION
 
         holder.direction = Const.Arm.Motor.Direction.holder
+        flip.direction = Const.Arm.Motor.Direction.flip
 
     }
+
     override fun autonomousInit() {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun teleopInit() {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun disabledInit() {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun testInit() {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun readSensors(state: State) {
-        TODO("Not yet implemented")
+        state.liftCurrentPosition = lift.currentPosition
     }
 
     override fun applyState(state: State) {
-        if (state.holderIsOpen){
+        if (state.liftIsUp) {
+            if (abs((lift.currentPosition - Const.Arm.Motor.Position.liftUpperLimit)) < 50) {
+                lift.power = 0.0
+            }else{
+                lift.power = 0.5
+            }
+            lift.targetPosition = Const.Arm.Motor.Position.liftUpperLimit
+        } else {
+            if (lift.currentPosition < 50){
+                lift.power = 0.0
+            }else{
+                lift.power = 0.5
+            }
+            lift.targetPosition = 0
+        }
+        if (state.holderIsOpen) {
             holder.position = 0.0
-        }else{
+        } else {
             holder.position = 0.7
         }
+        if (state.flipIsUpward ){
+            flip.position = 0.65
+        }else{
+            flip.position = 0.0
+        }
+
     }
 }
