@@ -20,6 +20,9 @@ class Slider(hardwareMap: HardwareMap) : Component {
         leftSlider.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         rightSlider.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
 
+        leftSlider.targetPosition = 0
+        rightSlider.targetPosition = 0
+
         leftSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
         rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
 

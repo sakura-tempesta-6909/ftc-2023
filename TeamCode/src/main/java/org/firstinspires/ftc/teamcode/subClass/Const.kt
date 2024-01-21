@@ -58,7 +58,7 @@ class Const {
 
             class State{
                 companion object{
-                    const val holderIsOpen = 0.0
+                    const val holderIsOpen = true
                 }
             }
 

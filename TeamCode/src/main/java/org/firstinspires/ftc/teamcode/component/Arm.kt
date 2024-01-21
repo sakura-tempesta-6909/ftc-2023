@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.component
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
 
 class Arm(hardwareMap: HardwareMap) : Component {
-    private lateinit var holder:Servo
+    private lateinit var arm:DcMotor
+    private var holder:Servo
     init {
         holder = hardwareMap.get(Servo::class.java,Const.Arm.Motor.Name.holder)
 
