@@ -11,6 +11,14 @@ class State() {
     var liftIsUp = false
     var liftCurrentPosition = 0
     var flipIsUpward = false
+    var leftFrontPower = 0.0
+    var rightFrontPower = 0.0
+    var leftRearPower = 0.0
+    var rightRearPower = 0.0
+    var imuIsReset = false
+    var leftStickX = 0.0
+    var leftStickY = 0.0
+    var rightStickX = 0.0
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -23,11 +31,20 @@ class State() {
         liftIsUp = false
         liftCurrentPosition = 0
         flipIsUpward = false
+        leftFrontPower = 0.0
+        rightFrontPower = 0.0
+        leftRearPower = 0.0
+        rightRearPower = 0.0
+        imuIsReset = false
+        leftStickX = 0.0
+        leftStickY = 0.0
+        rightStickX = 0.0
     }
 
     fun stateReset() {
         leftSliderCurrentPosition = 0
         rightSliderCurrentPosition = 0
+        liftCurrentPosition = 0
     }
 }
 

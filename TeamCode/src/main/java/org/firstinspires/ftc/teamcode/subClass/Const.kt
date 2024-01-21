@@ -70,4 +70,27 @@ class Const {
 
         }
     }
+    class Drive{
+        class Name{
+            companion object{
+                const val leftFront = "motor_0"
+                const val rightFront = "motor_1"
+                const val leftRear = "motor_2"
+                const val rightRear = "motor_3"
+                const val imu = "imu"
+            }
+        }
+        class Direction{
+            companion object{
+                val leftFront = DcMotorSimple.Direction.FORWARD
+
+                val rightFront = DcMotorSimple.Direction.REVERSE
+
+                val leftRear = DcMotorSimple.Direction.FORWARD
+
+                val rightRear = DcMotorSimple.Direction.REVERSE
+            }
+
+        }
+    }
 }

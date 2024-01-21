@@ -109,6 +109,10 @@ class Main : OpMode() {
         } else if (gamepad1.left_bumper) {
             state.flipIsUpward = false
         }
+        state.imuIsReset = gamepad1.start
+        state.leftStickX = gamepad1.left_stick_x.toDouble()
+        state.leftStickY = gamepad1.left_stick_y.toDouble()
+        state.rightStickX =gamepad1.right_stick_x.toDouble()
         //Stateを適用
         components.forEach { component ->
             component.applyState(state)
