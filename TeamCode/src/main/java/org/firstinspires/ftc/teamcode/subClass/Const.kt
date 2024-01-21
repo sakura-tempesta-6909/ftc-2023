@@ -37,7 +37,9 @@ class Const {
 
         class Position {
             companion object {
+                const val medium = 1000
                 const val top = 2000
+                const val climb = 2400
             }
         }
     }
@@ -82,6 +84,7 @@ class Const {
         }
         class Direction{
             companion object{
+
                 val leftFront = DcMotorSimple.Direction.FORWARD
 
                 val rightFront = DcMotorSimple.Direction.REVERSE
@@ -90,7 +93,25 @@ class Const {
 
                 val rightRear = DcMotorSimple.Direction.REVERSE
             }
+        }
+        class Speed{
+            companion object{
+                const val lowGear = 0.5
+                const val highGear = 1.0
+            }
+        }
+    }
+    class Drone{
+        class Name{
+            companion object{
+                const val droneLauncher = "servo_2"
+            }
+        }
 
+        class Position{
+            companion object{
+                const val shot = 0.2
+            }
         }
     }
 }

@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.component
 
+import android.util.Log
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
+import kotlin.math.abs
 
 class Slider(hardwareMap: HardwareMap) : Component {
     private var leftSlider: DcMotor
@@ -22,6 +24,9 @@ class Slider(hardwareMap: HardwareMap) : Component {
 
         leftSlider.targetPosition = 0
         rightSlider.targetPosition = 0
+
+        leftSlider.power = 0.0
+        rightSlider.power = 0.0
 
         leftSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
         rightSlider.mode = DcMotor.RunMode.RUN_TO_POSITION
@@ -50,32 +55,22 @@ class Slider(hardwareMap: HardwareMap) : Component {
     }
 
     private fun moveSliderToPosition(rightSliderTarget: Int, leftSliderTarget: Int, sliderPower: Double) {
-        if (rightSliderTarget == 0 && leftSliderTarget == 0 && rightSlider.currentPosition < Const.Slider.tolerance && leftSlider.currentPosition < Const.Slider.tolerance) {
+        rightSlider.targetPosition = rightSliderTarget
+        leftSlider.targetPosition = leftSliderTarget
+        if (rightSliderTarget == 0 && leftSliderTarget == 0 && abs(rightSlider.currentPosition) < Const.Slider.tolerance && abs(leftSlider.currentPosition) < Const.Slider.tolerance) {
             rightSlider.power = 0.0
             leftSlider.power = 0.0
         } else {
             rightSlider.power = sliderPower
             leftSlider.power = sliderPower
         }
-        rightSlider.targetPosition = rightSliderTarget
-        leftSlider.targetPosition = leftSliderTarget
     }
 
     override fun applyState(state: State) {
         when (state.sliderState) {
             SliderStates.Disable -> {
-                //Sliderがしまわれていたら、モーターのパワーを減らす
-                if (rightSlider.currentPosition < Const.Slider.tolerance && leftSlider.currentPosition < Const.Slider.tolerance) {
-                    rightSlider.power = 0.0
-                    leftSlider.power = 0.0
-                } else {
-                    rightSlider.power = Const.Slider.Speed.targetToPosition
-                    leftSlider.power = Const.Slider.Speed.targetToPosition
-                }
-                leftSlider.targetPosition = 0
-                rightSlider.targetPosition = 0
+                moveSliderToPosition(0,0, Const.Slider.Speed.targetToPosition)
             }
-
             SliderStates.MoveSliderToPosition -> {
                 moveSliderToPosition(state.rightSliderTargetPosition, state.leftSliderTargetPosition, state.sliderPower)
             }

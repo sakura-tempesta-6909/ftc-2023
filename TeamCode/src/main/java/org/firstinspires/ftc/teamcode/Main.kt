@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.component.Arm
 import org.firstinspires.ftc.teamcode.component.Component
 import org.firstinspires.ftc.teamcode.component.Drive
+import org.firstinspires.ftc.teamcode.component.Drone
 import org.firstinspires.ftc.teamcode.component.Slider
 import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.state.State
@@ -52,6 +53,7 @@ class Main : OpMode() {
         components.add(Slider(hardwareMap))
         components.add(Drive(hardwareMap))
         components.add(Arm(hardwareMap))
+        components.add(Drone(hardwareMap))
         state.stateInit()
         telemetry.addData("Status", "Initialized")
     }
@@ -69,6 +71,8 @@ class Main : OpMode() {
     override fun start() {
         runtime.reset()
         state.stateInit()
+        gamepad1.rumble(1)
+        gamepad2.rumble(1)
     }
 
     /*
@@ -83,12 +87,12 @@ class Main : OpMode() {
             component.readSensors(state)
         }
         //操作関連コマンド
-        if (gamepad1.dpad_up) {
+        if (gamepad2.dpad_up) {
             state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = Const.Slider.Position.top
             state.rightSliderTargetPosition = Const.Slider.Position.top
             state.sliderPower = Const.Slider.Speed.targetToPosition
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = 0
             state.rightSliderTargetPosition = 0
@@ -99,20 +103,28 @@ class Main : OpMode() {
         } else if (gamepad1.y) {
             state.holderIsOpen = false
         }
-        if (gamepad1.dpad_up) {
+        if (gamepad2.dpad_up) {
             state.liftIsUp = true
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             state.liftIsUp = false
         }
-        if (gamepad1.right_bumper) {
+        if (gamepad2.dpad_up) {
             state.flipIsUpward = true
-        } else if (gamepad1.left_bumper) {
+        } else if (gamepad2.dpad_down) {
             state.flipIsUpward = false
         }
+        if (gamepad2.a){
+            state.sliderState = SliderStates.MoveSliderToPosition
+            state.leftSliderTargetPosition = Const.Slider.Position.climb
+            state.rightSliderTargetPosition = Const.Slider.Position.climb
+            state.sliderPower = Const.Slider.Speed.targetToPosition
+        }
+        state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
         state.imuIsReset = gamepad1.start
         state.leftStickX = gamepad1.left_stick_x.toDouble()
         state.leftStickY = gamepad1.left_stick_y.toDouble()
-        state.rightStickX =gamepad1.right_stick_x.toDouble()
+        state.rightStickX = gamepad1.right_stick_x.toDouble()
+
         //Stateを適用
         components.forEach { component ->
             component.applyState(state)

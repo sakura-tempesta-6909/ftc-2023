@@ -59,6 +59,12 @@ class Drive(hardwareMap: HardwareMap) : Component {
     }
 
     override fun applyState(state: State) {
+        if (state.leftSliderCurrentPosition < Const.Slider.Position.medium){
+            state.driveMagnification = Const.Drive.Speed.highGear
+        }else{
+            state.driveMagnification = Const.Drive.Speed.lowGear
+        }
+
         // ロボットの方向を取得
         val botHeading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
         if (state.imuIsReset) {
@@ -66,7 +72,7 @@ class Drive(hardwareMap: HardwareMap) : Component {
         }
         val x = state.leftStickX
         val y = state.leftStickY
-        val rx = state.rightStickX
+        val rx = - state.rightStickX
 
         // Field Centric座標系に変換
         var rotX = x * cos(botHeading) - y * sin(botHeading)
@@ -78,15 +84,16 @@ class Drive(hardwareMap: HardwareMap) : Component {
         val denominator =
                 (abs(rotY) + abs(rotX) + abs(rx)).coerceAtLeast(1.0)
 
-        state.leftFrontPower = (rotY + rotX + rx) / denominator
-        state.rightFrontPower = (rotY - rotX + rx) / denominator
-        state.leftRearPower = (rotY - rotX - rx) / denominator
-        state.rightRearPower = (rotY + rotX - rx) / denominator
+        state.leftFrontPower = (rotY + rotX + rx) / denominator * state.driveMagnification
+        state.leftRearPower = (rotY - rotX + rx) / denominator * state.driveMagnification
+        state.rightFrontPower = (rotY - rotX - rx) / denominator * state.driveMagnification
+        state.rightRearPower = (rotY + rotX - rx) / denominator * state.driveMagnification
 
         leftFront.power = state.leftFrontPower
         rightFront.power = state.rightFrontPower
         leftRear.power = state.leftRearPower
         rightRear.power = state.rightRearPower
+
 
     }
 }

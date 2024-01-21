@@ -71,7 +71,9 @@ class Arm(hardwareMap: HardwareMap) : Component {
             holder.position = 0.7
         }
         if (state.flipIsUpward ){
-            flip.position = 0.65
+            if (lift.currentPosition < 300) {
+                flip.position = 0.65
+            }
         }else{
             flip.position = 0.0
         }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.state
 
+import org.firstinspires.ftc.teamcode.subClass.Const
+
 class State() {
     var sliderState: SliderStates = SliderStates.Disable
     var leftSliderTargetPosition = 0
@@ -19,6 +21,9 @@ class State() {
     var leftStickX = 0.0
     var leftStickY = 0.0
     var rightStickX = 0.0
+    var droneIsShot = false
+    var driveMagnification = 1.0
+
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -39,6 +44,8 @@ class State() {
         leftStickX = 0.0
         leftStickY = 0.0
         rightStickX = 0.0
+        droneIsShot = false
+        driveMagnification = Const.Drive.Speed.highGear
     }
 
     fun stateReset() {
