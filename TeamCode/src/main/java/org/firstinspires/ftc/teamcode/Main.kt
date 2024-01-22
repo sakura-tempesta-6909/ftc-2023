@@ -62,7 +62,13 @@ class Main : OpMode() {
      * ドライバーがINITを押した後、PLAYを押す前に繰り返し実行するコード
      */
     override fun init_loop() {
-
+        state.stateReset()
+        //センサーの値の取得
+        components.forEach { component ->
+            component.readSensors(state)
+        }
+        //数値を出力
+        Util.sendLog(state, telemetry)
     }
 
     /*
@@ -98,43 +104,49 @@ class Main : OpMode() {
             state.rightSliderTargetPosition = 0
             state.sliderPower = Const.Slider.Speed.targetToPosition
         }
+
         if (gamepad1.x) {
             state.holderIsOpen = true
         } else if (gamepad1.y) {
             state.holderIsOpen = false
-        }
-        if (gamepad2.dpad_up) {
-            state.liftIsUp = true
-        } else if (gamepad2.dpad_down) {
-            state.liftIsUp = false
-        }
-        if (gamepad2.dpad_up) {
-            state.flipIsUpward = true
-        } else if (gamepad2.dpad_down) {
-            state.flipIsUpward = false
-        }
-        if (gamepad2.a){
-            state.sliderState = SliderStates.MoveSliderToPosition
-            state.leftSliderTargetPosition = Const.Slider.Position.climb
-            state.rightSliderTargetPosition = Const.Slider.Position.climb
-            state.sliderPower = Const.Slider.Speed.targetToPosition
-        }
-        state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
-        state.imuIsReset = gamepad1.start
-        state.leftStickX = gamepad1.left_stick_x.toDouble()
-        state.leftStickY = gamepad1.left_stick_y.toDouble()
-        state.rightStickX = gamepad1.right_stick_x.toDouble()
+        } else if (gamepad2.x) {
+            state.holderIsOpen = true
+        } else if (gamepad2.y) {
+            state.holderIsOpen = false}
+            if (gamepad2.dpad_up) {
+                state.liftIsUp = true
+            } else if (gamepad2.dpad_down) {
+                state.liftIsUp = false
+            }
+            if (gamepad2.dpad_up) {
+                state.flipIsUpward = true
+            } else if (gamepad2.dpad_down) {
+                state.flipIsUpward = false
+            }
+            if (gamepad2.a) {
+                state.sliderState = SliderStates.MoveSliderToPosition
+                state.leftSliderTargetPosition = Const.Slider.Position.climb
+                state.rightSliderTargetPosition = Const.Slider.Position.climb
+                state.sliderPower = Const.Slider.Speed.targetToPosition
+                state.liftIsUp = false
+                state.flipIsUpward = false
+            }
+            state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
+            state.imuIsReset = gamepad1.start
+            state.leftStickX = gamepad1.left_stick_x.toDouble()
+            state.leftStickY = gamepad1.left_stick_y.toDouble()
+            state.rightStickX = gamepad1.right_stick_x.toDouble()
 
-        //Stateを適用
-        components.forEach { component ->
-            component.applyState(state)
-        }
-        //数値を出力
-        Util.sendLog(state, telemetry)
+            //Stateを適用
+            components.forEach { component ->
+                component.applyState(state)
+            }
+            //数値を出力
+            Util.sendLog(state, telemetry)
+
     }
-
     /*
-     * コードが停止されるときに一度だけ実行される
-     */
+   * コードが停止されるときに一度だけ実行される
+   */
     override fun stop() {}
 }

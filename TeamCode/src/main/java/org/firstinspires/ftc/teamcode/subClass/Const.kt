@@ -110,7 +110,12 @@ class Const {
 
         class Position{
             companion object{
-                const val shot = 0.2
+                const val shot = 0.0
+            }
+        }
+        class Direction{
+            companion object{
+                val drone = Servo.Direction.FORWARD
             }
         }
     }

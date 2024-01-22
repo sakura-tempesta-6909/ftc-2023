@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.state
 
+import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.subClass.Const
 
 class State() {
@@ -23,7 +24,8 @@ class State() {
     var rightStickX = 0.0
     var droneIsShot = false
     var driveMagnification = 1.0
-
+    var dronelauncherPosition = 0.0
+    var droneDirection = Servo.Direction.REVERSE
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -46,6 +48,8 @@ class State() {
         rightStickX = 0.0
         droneIsShot = false
         driveMagnification = Const.Drive.Speed.highGear
+        dronelauncherPosition = 1.0
+        droneDirection = Servo.Direction.REVERSE
     }
 
     fun stateReset() {

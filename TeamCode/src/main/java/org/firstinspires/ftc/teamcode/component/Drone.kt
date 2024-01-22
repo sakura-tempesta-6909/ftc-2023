@@ -7,12 +7,9 @@ import org.firstinspires.ftc.teamcode.subClass.Const
 
 class Drone(hardwareMap: HardwareMap) : Component {
     private var droneLauncher: Servo
-    private var initialPosition:Double = 0.0
-
     init {
         droneLauncher = hardwareMap.get(Servo::class.java,Const.Drone.Name.droneLauncher)
-        var initialPosition = droneLauncher.position
-        droneLauncher.direction = Servo.Direction.FORWARD
+        droneLauncher.direction = Const.Drone.Direction.drone
     }
 
     override fun autonomousInit() {
@@ -20,7 +17,7 @@ class Drone(hardwareMap: HardwareMap) : Component {
     }
 
     override fun teleopInit() {
-        // TODO("Not yet implemented")
+
     }
 
     override fun disabledInit() {
@@ -32,14 +29,15 @@ class Drone(hardwareMap: HardwareMap) : Component {
     }
 
     override fun readSensors(state: State) {
-
+        state.dronelauncherPosition = droneLauncher.position
     }
 
     override fun applyState(state: State) {
         if (state.droneIsShot){
-            droneLauncher.position = initialPosition+Const.Drone.Position.shot
+            droneLauncher.position = Const.Drone.Position.shot
         }else{
-            droneLauncher.position = initialPosition
+            droneLauncher.position = 1.0
         }
+        state.droneDirection = droneLauncher.direction
     }
 }
