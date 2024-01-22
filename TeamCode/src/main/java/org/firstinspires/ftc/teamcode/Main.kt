@@ -131,6 +131,14 @@ class Main : OpMode() {
                 state.liftIsUp = false
                 state.flipIsUpward = false
             }
+        if (gamepad2.right_trigger > 0){
+            state.leftSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
+            state.rightSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
+        }else if(gamepad2.left_trigger > 0){
+            state.leftSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
+            state.rightSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
+        }
+
             state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
             state.imuIsReset = gamepad1.start
             state.leftStickX = gamepad1.left_stick_x.toDouble()
