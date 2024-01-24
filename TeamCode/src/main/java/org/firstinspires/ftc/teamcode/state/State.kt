@@ -22,6 +22,10 @@ class State() {
     var leftStickX = 0.0
     var leftStickY = 0.0
     var rightStickX = 0.0
+    var twoDpadUP = false
+    var twoDpadDown =false
+    var oneDpadX = false
+    var oneDpadY = false
     var droneIsShot = false
     var driveMagnification = 1.0
     var dronelauncherPosition = 0.0
@@ -50,6 +54,10 @@ class State() {
         driveMagnification = Const.Drive.Speed.highGear
         dronelauncherPosition = 1.0
         droneDirection = Servo.Direction.REVERSE
+        twoDpadUP = false
+        twoDpadDown =false
+        oneDpadX = false
+        oneDpadY = false
     }
 
     fun stateReset() {

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.component
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.IMU
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
@@ -26,6 +27,11 @@ class Drive(hardwareMap: HardwareMap) : Component {
         leftRear.direction = Const.Drive.Direction.leftRear
         rightRear = hardwareMap.get(DcMotor::class.java,Const.Drive.Name.rightRear)
         rightRear.direction = Const.Drive.Direction.rightRear
+
+        leftFront.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        leftRear.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        rightRear.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        rightFront.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
 
         // IMU（慣性計測装置）の初期化
         imu = hardwareMap.get(IMU::class.java,Const.Drive.Name.imu)

@@ -14,7 +14,7 @@ class Util {
             telemetry.addData("rightSliderTarget == 0",state.rightSliderTargetPosition == 0)
             telemetry.addData("isDown",state.rightSliderTargetPosition == 0 && state.leftSliderTargetPosition == 0 && abs(state.rightSliderCurrentPosition) < Const.Slider.tolerance && abs(state.leftSliderCurrentPosition) < Const.Slider.tolerance)
             telemetry.addData("target", state.rightSliderTargetPosition)
-            telemetry.addData("power", state.sliderPower)
+            telemetry.addData("power", state.leftRearPower)
             telemetry.addData("current", state.rightSliderCurrentPosition)
             telemetry.addData("holderIsOpen", state.holderIsOpen.toString())
             telemetry.addData("liftIsUp",state.liftIsUp)

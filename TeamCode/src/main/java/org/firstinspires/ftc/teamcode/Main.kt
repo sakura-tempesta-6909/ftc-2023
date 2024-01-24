@@ -105,22 +105,22 @@ class Main : OpMode() {
             state.sliderPower = Const.Slider.Speed.targetToPosition
         }
 
-        if (gamepad1.x) {
+        if (state.oneDpadX) {
             state.holderIsOpen = true
-        } else if (gamepad1.y) {
+        } else if (state.oneDpadY) {
             state.holderIsOpen = false
-        } else if (gamepad2.x) {
+        } else if (state.oneDpadX) {
             state.holderIsOpen = true
         } else if (gamepad2.y) {
             state.holderIsOpen = false}
-            if (gamepad2.dpad_up) {
+            if (state.twoDpadUP) {
                 state.liftIsUp = true
-            } else if (gamepad2.dpad_down) {
+            } else if (state.twoDpadDown) {
                 state.liftIsUp = false
             }
-            if (gamepad2.dpad_up) {
+            if (state.twoDpadUP) {
                 state.flipIsUpward = true
-            } else if (gamepad2.dpad_down) {
+            } else if (state.twoDpadDown) {
                 state.flipIsUpward = false
             }
             if (gamepad2.a) {
@@ -139,6 +139,10 @@ class Main : OpMode() {
             state.rightSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
         }
 
+            state.twoDpadDown = gamepad2.dpad_down
+            state.twoDpadUP = gamepad2.dpad_up
+            state.oneDpadY = gamepad1.y
+            state.oneDpadX = gamepad1.x
             state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
             state.imuIsReset = gamepad1.start
             state.leftStickX = gamepad1.left_stick_x.toDouble()
