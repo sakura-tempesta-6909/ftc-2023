@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode
+package org.firstinspires.ftc.teamcode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.component.Arm
 import org.firstinspires.ftc.teamcode.component.Component
@@ -11,10 +10,7 @@ import org.firstinspires.ftc.teamcode.component.Drone
 import org.firstinspires.ftc.teamcode.component.Slider
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
-import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.subClass.Const
-import java.util.Timer
-import kotlin.concurrent.timer
 
 
 @Autonomous(name = "Main Autonomous", group = "Main")

@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode
+package org.firstinspires.ftc.teamcode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.component.Arm
 import org.firstinspires.ftc.teamcode.component.Component
@@ -11,12 +10,10 @@ import org.firstinspires.ftc.teamcode.component.Drone
 import org.firstinspires.ftc.teamcode.component.Slider
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
-import org.firstinspires.ftc.teamcode.state.SliderStates
 import org.firstinspires.ftc.teamcode.subClass.Const
-import java.util.Timer
-import kotlin.concurrent.timer
-@Autonomous(name = "Main Autonomous", group = "Main")
-class Autonomous2 : LinearOpMode() {
+
+@Autonomous(name = "Main Autonomous", group = "Red")
+class AutonomousRedFar : LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -41,7 +38,11 @@ class Autonomous2 : LinearOpMode() {
                 Const.Autonomous.slider,
                 Const.Autonomous.holder,
                 Const.Autonomous.slider,
+                //8
+                Const.Autonomous.minimumMove,
                 Const.Autonomous.holder,
+                //10
+                Const.Autonomous.minimumMove,
                 Const.Autonomous.slider,
                 Const.Autonomous.holder,
                 Const.Autonomous.slider,
@@ -129,7 +130,10 @@ class Autonomous2 : LinearOpMode() {
                             // Holderを閉じる
                             state.holderIsOpen = false
                         }
-                        8 -> {
+                        8 ->{
+                            state.leftStickY = 0.5
+                        }
+                        9 -> {
                             // Sliderを再び上げる
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -138,30 +142,33 @@ class Autonomous2 : LinearOpMode() {
                             state.liftIsUp = true
                             state.flipIsUpward = true
                         }
-                        9 -> {
+                        10 ->{
+                            state.leftStickY = - 0.5
+                        }
+                        11 -> {
                             // Holderを開く
                             state.holderIsOpen = true
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
                         }
-                        10 -> {
+                        12 -> {
                             // Sliderを戻す
                             state.leftSliderTargetPosition = 0
                             state.rightSliderTargetPosition = 0
                             state.liftIsUp = false
                             state.flipIsUpward = false
                         }
-                        11 -> {
+                        13 -> {
                             // 500ミリ秒横に進む
                             state.leftStickX = 0.5
                             state.leftStickY = 0.0
                         }
-                        12 -> {
+                        14 -> {
                             // 500ミリ秒前に進む
                             state.leftStickX = 0.0
                             state.leftStickY = -0.5
                         }
-                        13 -> {
+                        15 -> {
                             // 停止
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0

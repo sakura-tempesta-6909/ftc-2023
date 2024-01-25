@@ -129,6 +129,8 @@ class Const {
             const val shortenDistance = -300
             const val backTime = 700
             const val enterTime = 500
+            //秒数調整
+            const val minimumMove = 200
         }
     }
 }
