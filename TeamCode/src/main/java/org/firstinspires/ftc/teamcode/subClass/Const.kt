@@ -120,4 +120,15 @@ class Const {
             }
         }
     }
+    class Autonomous{
+        companion object{
+            const val slider = 1500
+            const val holder = 400
+            const val lateralMovement = 1950
+            const val verticalMovement = 2500
+            const val shortenDistance = -300
+            const val backTime = 700
+            const val enterTime = 500
+        }
+    }
 }

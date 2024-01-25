@@ -67,13 +67,6 @@ class Slider(hardwareMap: HardwareMap) : Component {
     }
 
     override fun applyState(state: State) {
-        when (state.sliderState) {
-            SliderStates.Disable -> {
-                moveSliderToPosition(0,0, Const.Slider.Speed.targetToPosition)
-            }
-            SliderStates.MoveSliderToPosition -> {
-                moveSliderToPosition(state.rightSliderTargetPosition, state.leftSliderTargetPosition, state.sliderPower)
-            }
-        }
+        moveSliderToPosition(state.rightSliderTargetPosition, state.leftSliderTargetPosition, state.sliderPower)
     }
 }
