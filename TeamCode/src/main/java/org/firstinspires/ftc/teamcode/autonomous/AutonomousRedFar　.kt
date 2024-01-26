@@ -151,6 +151,7 @@ class AutonomousRedFar : LinearOpMode() {
                         }
                         8 -> {
                             // Holderを閉じる
+                            state.leftStickY = 0.0
                             state.holderIsOpen = false
                         }
                         9 ->{

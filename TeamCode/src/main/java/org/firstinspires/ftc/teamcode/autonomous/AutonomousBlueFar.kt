@@ -142,15 +142,11 @@ class AutonomousBlueFar : LinearOpMode() {
                         5 -> {
                             // Holderを開く
                             state.holderIsOpen = true
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
                             telemetry.addData("mode",index)
                             telemetry.update()
                         }
                         6 -> {
                             // Sliderを戻す
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
                             state.leftSliderTargetPosition = 0
                             state.rightSliderTargetPosition = 0
                             state.liftIsUp = false
@@ -165,6 +161,7 @@ class AutonomousBlueFar : LinearOpMode() {
                         }
                         8 -> {
                             // Holderを閉じる
+                            state.leftStickY =0.0
                             state.holderIsOpen = false
                             telemetry.addData("mode",index)
                             telemetry.update()
