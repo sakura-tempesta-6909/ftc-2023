@@ -36,7 +36,7 @@ class AutonomousRedFar : LinearOpMode() {
                 //1
                 Const.Autonomous.verticalMovement,
                 //2
-                Const.Autonomous.lateralMovement /2,
+                Const.Autonomous.lateralMovement / 2,
                 //3
                 Const.Autonomous.backTime,
                 //4
@@ -67,137 +67,145 @@ class AutonomousRedFar : LinearOpMode() {
                 // ...
         )
 
-// ターゲット時間の合計時間
+        // ターゲット時間の合計時間
         val totalTargetTime = targetTimes.sum()
 
-// ターゲット時間ごとの開始時間
+        // ターゲット時間ごとの開始時間
         val startTimes = targetTimes.scan(0L) { acc, targetTime -> acc + targetTime }
 
-// ステートの初期化
+        // ステートの初期化
         state.stateInit()
 
-// ゲーム開始待機
+        // ゲーム開始待機
         waitForStart()
 
-// ゲーム開始時刻
+        // ゲーム開始時刻
         val startTime = System.currentTimeMillis()
-
+        var beforeTime = System.currentTimeMillis()
+        var phaseCount = 0
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: $runtime")
             state.stateReset()
-
+            //現在時刻から前回phaseが切り替わったときの時間を引いて、それが設定した時間以上だったら、phaseを次に進める
+            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount]) {
+                phaseCount++
+                beforeTime = System.currentTimeMillis()
+            }
             // センサーの値の取得
             components.forEach { component ->
                 component.readSensors(state)
             }
-
-            // ターゲット時間ごとにステートを設定
-            startTimes.forEachIndexed { index, start ->
-                val elapsedTime = System.currentTimeMillis() - startTime
-                if (elapsedTime in start until start + targetTimes[index]) {
-                    when (index) {
-                        0 -> {
-                            // ちょっと後ろに進む
-                            state.holderIsOpen = false
-                            state.leftStickX = - 0.5
-                            state.leftStickY = 0.0
-                            telemetry.addData("mode",index)
-                            telemetry.update()
-                        }
-                        1 -> {
-                            // ちょっと前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = -0.5
-                            telemetry.addData("mode",index)
-                            telemetry.update()
-                        }
-                        2 -> {
-                            // また横に進む
-                            state.leftStickX = 0.5
-                            state.leftStickY = 0.0
-                        }
-                        3 -> {
-                            // さらに前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = -0.5
-                        }
-                        4 -> {
-                            // Sliderの動作と各種設定
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.sliderPower = Const.Slider.Speed.targetToPosition
-                            state.leftSliderTargetPosition = Const.Slider.Position.top
-                            state.rightSliderTargetPosition = Const.Slider.Position.top
-                            state.liftIsUp = true
-                            state.flipIsUpward = true
-                        }
-                        5 -> {
-                            // Holderを開く
-                            state.holderIsOpen = true
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        6 -> {
-                            // Sliderを戻す
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.leftSliderTargetPosition = 0
-                            state.rightSliderTargetPosition = 0
-                            state.liftIsUp = false
-                            state.flipIsUpward = false
-                        }
-                        7 ->{
-                            state.leftStickY =  0.5
-                        }
-                        8 -> {
-                            // Holderを閉じる
-                            state.holderIsOpen = false
-                        }
-                        9 ->{
-                            state.leftStickY = - 0.5
-                        }
-                        10 -> {
-                            // Sliderを再び上げる
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.leftSliderTargetPosition = Const.Slider.Position.top
-                            state.rightSliderTargetPosition = Const.Slider.Position.top
-                            state.liftIsUp = true
-                            state.flipIsUpward = true
-                        }
-                        11 -> {
-                            // Holderを開く
-                            state.holderIsOpen = true
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        12 -> {
-                            // Sliderを戻す
-                            state.leftSliderTargetPosition = 0
-                            state.rightSliderTargetPosition = 0
-                            state.liftIsUp = false
-                            state.flipIsUpward = false
-                        }
-                        13 -> {
-                            // 500ミリ秒横に進む
-                            state.leftStickX = - 0.5
-                            state.leftStickY = 0.0
-                        }
-                        14 -> {
-                            // 500ミリ秒前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = -0.5
-                        }
-                        15 -> {
-                            // 停止
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        // 以下同様に追加
-                        // ...
-                    }
-                    return@forEachIndexed
+            when (phaseCount) {
+                0 -> {
+                    // ちょっと後ろに進む
+                    state.holderIsOpen = false
+                    state.leftStickX = -0.5
+                    state.leftStickY = 0.0
                 }
+
+                1 -> {
+                    // ちょっと前に進む
+                    state.leftStickX = 0.0
+                    state.leftStickY = -0.5
+                }
+
+                2 -> {
+                    // また横に進む
+                    state.leftStickX = 0.5
+                    state.leftStickY = 0.0
+                }
+
+                3 -> {
+                    // さらに前に進む
+                    state.leftStickX = 0.0
+                    state.leftStickY = -0.5
+                }
+
+                4 -> {
+                    // Sliderの動作と各種設定
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.top
+                    state.rightSliderTargetPosition = Const.Slider.Position.top
+                    state.liftIsUp = true
+                    state.flipIsUpward = true
+                }
+
+                5 -> {
+                    // Holderを開く
+                    state.holderIsOpen = true
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+
+                6 -> {
+                    // Sliderを戻す
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                    state.leftSliderTargetPosition = 0
+                    state.rightSliderTargetPosition = 0
+                    state.liftIsUp = false
+                    state.flipIsUpward = false
+                }
+
+                7 -> {
+                    state.leftStickY = 0.5
+                }
+
+                8 -> {
+                    // Holderを閉じる
+                    state.holderIsOpen = false
+                }
+
+                9 -> {
+                    state.leftStickY = -0.5
+                }
+
+                10 -> {
+                    // Sliderを再び上げる
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                    state.leftSliderTargetPosition = Const.Slider.Position.top
+                    state.rightSliderTargetPosition = Const.Slider.Position.top
+                    state.liftIsUp = true
+                    state.flipIsUpward = true
+                }
+
+                11 -> {
+                    // Holderを開く
+                    state.holderIsOpen = true
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+
+                12 -> {
+                    // Sliderを戻す
+                    state.leftSliderTargetPosition = 0
+                    state.rightSliderTargetPosition = 0
+                    state.liftIsUp = false
+                    state.flipIsUpward = false
+                }
+
+                13 -> {
+                    // 500ミリ秒横に進む
+                    state.leftStickX = -0.5
+                    state.leftStickY = 0.0
+                }
+
+                14 -> {
+                    // 500ミリ秒前に進む
+                    state.leftStickX = 0.0
+                    state.leftStickY = -0.5
+                }
+
+                15 -> {
+                    // 停止
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+                // 以下同様に追加
+                // ...
             }
 
             // Stateを適用
@@ -207,6 +215,7 @@ class AutonomousRedFar : LinearOpMode() {
 
             // 数値を出力
             Util.sendLog(state, telemetry)
+            telemetry.addData("mode", phaseCount)
             telemetry.update()
         }
 
