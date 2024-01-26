@@ -30,6 +30,7 @@ class Autonomous : LinearOpMode() {
         telemetry.addData("Status", "Initialized")
         waitForStart()
         val startTime = System.currentTimeMillis()
+
         val targetTime = Const.Autonomous.lateralMovement
         val targetTime2 = targetTime + Const.Autonomous.verticalMovement
         val targetTime3 = targetTime2 + Const.Autonomous.lateralMovement - Const.Autonomous.shortenDistance
@@ -67,7 +68,7 @@ class Autonomous : LinearOpMode() {
             }
             if ((System.currentTimeMillis() - startTime) < targetTime){
                 state.holderIsOpen = false
-                state.leftStickX = -0.5
+                state.leftStickX = - 0.5
                 state.leftStickY = 0.0
             } else if ((System.currentTimeMillis() - startTime) < targetTime2){
                 state.leftStickX = 0.0
@@ -78,11 +79,9 @@ class Autonomous : LinearOpMode() {
             } else if ((System.currentTimeMillis() - startTime) < targetTime4){
                 state.leftStickX = 0.0
                 state.leftStickY = -0.5
-            }
-            else if ((System.currentTimeMillis() - startTime) < targetTime5){
+            } else if ((System.currentTimeMillis() - startTime) < targetTime5){
                 state.leftStickX = 0.0
                 state.leftStickY = 0.0
-
                 state.sliderPower = Const.Slider.Speed.targetToPosition
 
                 state.leftSliderTargetPosition = Const.Slider.Position.top
@@ -150,8 +149,6 @@ class Autonomous : LinearOpMode() {
             //数値を出力
             Util.sendLog(state, telemetry)
         }
-
-
         telemetry.update();
     }
 }

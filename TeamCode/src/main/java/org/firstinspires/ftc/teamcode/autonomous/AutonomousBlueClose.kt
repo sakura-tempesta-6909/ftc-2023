@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
 import org.firstinspires.ftc.teamcode.subClass.Const
 
-@Autonomous(name = "RedClose", group = "Red")
-class AutonomousRedClose : LinearOpMode() {
+@Autonomous(name = "BlueClose", group = "Blue")
+class AutonomousBlueClose : LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -31,13 +31,15 @@ class AutonomousRedClose : LinearOpMode() {
 
         // ターゲット時間の定義
         val targetTimes = listOf(
-                Const.Autonomous.lateralMovement / 2,
+                - Const.Autonomous.shortenDistance,
                 Const.Autonomous.backTime,
                 Const.Autonomous.slider,
                 Const.Autonomous.holder,
                 Const.Autonomous.slider,
+                //8
                 Const.Autonomous.minimumMove,
                 Const.Autonomous.holder,
+                //10
                 Const.Autonomous.minimumMove,
                 Const.Autonomous.slider,
                 Const.Autonomous.holder,
@@ -82,12 +84,13 @@ class AutonomousRedClose : LinearOpMode() {
                         0 -> {
                             // ちょっと後ろに進む
                             state.holderIsOpen = false
-                            state.leftStickX = -0.5
+                            state.leftStickX = 0.5
                             state.leftStickY = 0.0
-                        }1 -> {
-                            // さらに前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = - 0.5
+                        }
+                        1 -> {
+                        // さらに前に進む
+                        state.leftStickX = 0.0
+                        state.leftStickY = - 0.5
                         }
                         2 -> {
                             // Sliderの動作と各種設定
@@ -149,7 +152,7 @@ class AutonomousRedClose : LinearOpMode() {
                         }
                         11 -> {
                             // 500ミリ秒横に進む
-                            state.leftStickX = - 0.5
+                            state.leftStickX = 0.5
                             state.leftStickY = 0.0
                         }
                         12 -> {

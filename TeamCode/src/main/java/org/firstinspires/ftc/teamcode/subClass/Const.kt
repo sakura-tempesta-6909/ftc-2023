@@ -66,6 +66,7 @@ class Const {
             class Position{
                 companion object{
                     const val liftUpperLimit = 680
+                    const val liftDownLimit = 15
                 }
             }
 
@@ -123,13 +124,12 @@ class Const {
     class Autonomous{
         companion object{
             const val slider = 1500
-            const val holder = 400
-            const val lateralMovement = 1950
+            const val holder = 500
+            const val lateralMovement = 2500
             const val verticalMovement = 2500
-            const val shortenDistance = -300
-            const val backTime = 700
+            const val shortenDistance = 300
+            const val backTime = 600
             const val enterTime = 500
-            //秒数調整
             const val minimumMove = 200
         }
     }

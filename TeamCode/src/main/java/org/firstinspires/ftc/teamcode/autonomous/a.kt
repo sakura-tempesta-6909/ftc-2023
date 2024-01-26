@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
 import org.firstinspires.ftc.teamcode.subClass.Const
 
-@Autonomous(name = "RedClose", group = "Red")
-class AutonomousRedClose : LinearOpMode() {
+@Autonomous(name = "a", group = "Red")
+class a : LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -31,24 +31,45 @@ class AutonomousRedClose : LinearOpMode() {
 
         // ターゲット時間の定義
         val targetTimes = listOf(
-                Const.Autonomous.lateralMovement / 2,
-                Const.Autonomous.backTime,
+//                //0
+//                Const.Autonomous.lateralMovement,
+//                //1
+//                Const.Autonomous.verticalMovement,
+//                //2
+//                Const.Autonomous.lateralMovement /2,
+//                //3
+//                Const.Autonomous.backTime,
+//                //4
+
+                100,
+
                 Const.Autonomous.slider,
+                //5
                 Const.Autonomous.holder,
+                //6
                 Const.Autonomous.slider,
+                //7
                 Const.Autonomous.minimumMove,
+                //8
                 Const.Autonomous.holder,
+                //9
                 Const.Autonomous.minimumMove,
+                //10
                 Const.Autonomous.slider,
+                //11
                 Const.Autonomous.holder,
+                //12
                 Const.Autonomous.slider,
-                Const.Autonomous.enterTime,
-                Const.Autonomous.enterTime,
-                10,
+
+                //13
+//                Const.Autonomous.enterTime,
+//                //14
+//                Const.Autonomous.enterTime,
+//                //15
+//                10,
                 // 以下同様に追加
                 // ...
         )
-
 
 // ターゲット時間の合計時間
         val totalTargetTime = targetTimes.sum()
@@ -80,16 +101,11 @@ class AutonomousRedClose : LinearOpMode() {
                 if (elapsedTime in start until start + targetTimes[index]) {
                     when (index) {
                         0 -> {
-                            // ちょっと後ろに進む
                             state.holderIsOpen = false
-                            state.leftStickX = -0.5
-                            state.leftStickY = 0.0
-                        }1 -> {
-                            // さらに前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = - 0.5
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        2 -> {
+                        1 -> {
                             // Sliderの動作と各種設定
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -98,14 +114,18 @@ class AutonomousRedClose : LinearOpMode() {
                             state.rightSliderTargetPosition = Const.Slider.Position.top
                             state.liftIsUp = true
                             state.flipIsUpward = true
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        3 -> {
+                        2 -> {
                             // Holderを開く
                             state.holderIsOpen = true
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        4 -> {
+                        3 -> {
                             // Sliderを戻す
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -113,19 +133,26 @@ class AutonomousRedClose : LinearOpMode() {
                             state.rightSliderTargetPosition = 0
                             state.liftIsUp = false
                             state.flipIsUpward = false
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        5 ->{
-                            state.leftStickY = 0.5
+                        4 ->{
+                            state.leftStickY =  0.5
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        6 -> {
-                            state.leftStickY = 0.0
+                        5 -> {
                             // Holderを閉じる
                             state.holderIsOpen = false
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        7 ->{
+                        6 ->{
                             state.leftStickY = - 0.5
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        8 -> {
+                        7 -> {
                             // Sliderを再び上げる
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -133,34 +160,25 @@ class AutonomousRedClose : LinearOpMode() {
                             state.rightSliderTargetPosition = Const.Slider.Position.top
                             state.liftIsUp = true
                             state.flipIsUpward = true
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        9 -> {
+                        8 -> {
                             // Holderを開く
                             state.holderIsOpen = true
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
-                        10 -> {
+                        9 -> {
                             // Sliderを戻す
                             state.leftSliderTargetPosition = 0
                             state.rightSliderTargetPosition = 0
                             state.liftIsUp = false
                             state.flipIsUpward = false
-                        }
-                        11 -> {
-                            // 500ミリ秒横に進む
-                            state.leftStickX = - 0.5
-                            state.leftStickY = 0.0
-                        }
-                        12 -> {
-                            // 500ミリ秒前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = -0.5
-                        }
-                        13 -> {
-                            // 停止
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
+                            telemetry.addData("mode",index)
+                            telemetry.update()
                         }
                         // 以下同様に追加
                         // ...

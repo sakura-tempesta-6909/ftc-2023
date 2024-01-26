@@ -21,7 +21,7 @@ class Arm(hardwareMap: HardwareMap) : Component {
         lift.direction = Const.Arm.Motor.Direction.lift
         lift.power = 0.0
         lift.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        lift.targetPosition = 0
+        lift.targetPosition = 15
         lift.mode = DcMotor.RunMode.RUN_TO_POSITION
 
         holder.direction = Const.Arm.Motor.Direction.holder
@@ -63,7 +63,7 @@ class Arm(hardwareMap: HardwareMap) : Component {
             }else{
                 lift.power = 0.5
             }
-            lift.targetPosition = 0
+            lift.targetPosition = 15
         }
         if (state.holderIsOpen) {
             holder.position = 0.0

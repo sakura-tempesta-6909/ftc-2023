@@ -112,7 +112,8 @@ class Main : OpMode() {
         } else if (state.oneDpadX) {
             state.holderIsOpen = true
         } else if (gamepad2.y) {
-            state.holderIsOpen = false}
+            state.holderIsOpen = false
+        }
             if (state.twoDpadUP) {
                 state.liftIsUp = true
             } else if (state.twoDpadDown) {
