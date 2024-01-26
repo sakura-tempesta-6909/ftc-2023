@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subClass.Util
 import org.firstinspires.ftc.teamcode.subClass.Const
 
 @Autonomous(name = "BlueClose", group = "Blue")
-class AutonomousBlueClose : LinearOpMode() {
+class AutonomousBlueClose: LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -31,147 +31,125 @@ class AutonomousBlueClose : LinearOpMode() {
 
         // ターゲット時間の定義
         val targetTimes = listOf(
-                - Const.Autonomous.shortenDistance,
-                Const.Autonomous.backTime,
+                //0
+                Const.Autonomous.lateralMovement,
+                //1
+                500,
+                //2
+                Const.Autonomous.verticalMovement,
+                //3
                 Const.Autonomous.slider,
+                //4
                 Const.Autonomous.holder,
+                //5
                 Const.Autonomous.slider,
+                //6
+                Const.Autonomous.enterTime,
+                //7
+                Const.Autonomous.enterTime - 700,
                 //8
-                Const.Autonomous.minimumMove,
-                Const.Autonomous.holder,
-                //10
-                Const.Autonomous.minimumMove,
-                Const.Autonomous.slider,
-                Const.Autonomous.holder,
-                Const.Autonomous.slider,
-                Const.Autonomous.enterTime,
-                Const.Autonomous.enterTime,
                 10,
                 // 以下同様に追加
                 // ...
         )
 
-
-// ターゲット時間の合計時間
-        val totalTargetTime = targetTimes.sum()
-
-// ターゲット時間ごとの開始時間
+        // ターゲット時間ごとの開始時間
         val startTimes = targetTimes.scan(0L) { acc, targetTime -> acc + targetTime }
 
-// ステートの初期化
+        // ステートの初期化
         state.stateInit()
 
-// ゲーム開始待機
+        // ゲーム開始待機
         waitForStart()
 
-// ゲーム開始時刻
+        // ゲーム開始時刻
         val startTime = System.currentTimeMillis()
-
+        var beforeTime = System.currentTimeMillis()
+        var phaseCount = 0
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: $runtime")
             state.stateReset()
-
+            //現在時刻から前回phaseが切り替わったときの時間を引いて、それが設定した時間以上だったら、phaseを次に進める
+            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 8) {
+                phaseCount++
+                beforeTime = System.currentTimeMillis()
+            }
             // センサーの値の取得
             components.forEach { component ->
                 component.readSensors(state)
             }
-
-            // ターゲット時間ごとにステートを設定
-            startTimes.forEachIndexed { index, start ->
-                val elapsedTime = System.currentTimeMillis() - startTime
-                if (elapsedTime in start until start + targetTimes[index]) {
-                    when (index) {
-                        0 -> {
-                            // ちょっと後ろに進む
-                            state.holderIsOpen = false
-                            state.leftStickX = 0.5
-                            state.leftStickY = 0.0
-                        }
-                        1 -> {
-                        // さらに前に進む
-                        state.leftStickX = 0.0
-                        state.leftStickY = - 0.5
-                        }
-                        2 -> {
-                            // Sliderの動作と各種設定
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.sliderPower = Const.Slider.Speed.targetToPosition
-                            state.leftSliderTargetPosition = Const.Slider.Position.top
-                            state.rightSliderTargetPosition = Const.Slider.Position.top
-                            state.liftIsUp = true
-                            state.flipIsUpward = true
-                        }
-                        3 -> {
-                            // Holderを開く
-                            state.holderIsOpen = true
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        4 -> {
-                            // Sliderを戻す
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.leftSliderTargetPosition = 0
-                            state.rightSliderTargetPosition = 0
-                            state.liftIsUp = false
-                            state.flipIsUpward = false
-                        }
-                        5 ->{
-                            state.leftStickY = 0.5
-                        }
-                        6 -> {
-                            state.leftStickY = 0.0
-                            // Holderを閉じる
-                            state.holderIsOpen = false
-                        }
-                        7 ->{
-                            state.leftStickY = - 0.5
-                        }
-                        8 -> {
-                            // Sliderを再び上げる
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                            state.leftSliderTargetPosition = Const.Slider.Position.top
-                            state.rightSliderTargetPosition = Const.Slider.Position.top
-                            state.liftIsUp = true
-                            state.flipIsUpward = true
-                        }
-                        9 -> {
-                            // Holderを開く
-                            state.holderIsOpen = true
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        10 -> {
-                            // Sliderを戻す
-                            state.leftSliderTargetPosition = 0
-                            state.rightSliderTargetPosition = 0
-                            state.liftIsUp = false
-                            state.flipIsUpward = false
-                        }
-                        11 -> {
-                            // 500ミリ秒横に進む
-                            state.leftStickX = 0.5
-                            state.leftStickY = 0.0
-                        }
-                        12 -> {
-                            // 500ミリ秒前に進む
-                            state.leftStickX = 0.0
-                            state.leftStickY = -0.5
-                        }
-                        13 -> {
-                            // 停止
-                            state.leftStickX = 0.0
-                            state.leftStickY = 0.0
-                        }
-                        // 以下同様に追加
-                        // ...
-                    }
-                    return@forEachIndexed
+            when (phaseCount) {
+                0 -> {
+                    // ちょっと後ろに進む
+                    state.holderIsOpen = false
+                    state.leftStickX = 0.5
+                    state.leftStickY = 0.0
                 }
-            }
 
+                1 -> {
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.medium
+                    state.rightSliderTargetPosition = Const.Slider.Position.medium
+                    // ちょっと前に進む
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+
+                2 -> {
+                    state.leftStickX = 0.0
+                    state.leftStickY = -0.5
+                    state.leftSliderTargetPosition = 0
+                    state.rightSliderTargetPosition = 0
+                }
+
+                3 -> {
+                    // Sliderの動作と各種設定
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.top
+                    state.rightSliderTargetPosition = Const.Slider.Position.top
+                    state.liftIsUp = true
+                    state.flipIsUpward = true
+                }
+
+                4 -> {
+                    // Holderを開く
+                    state.holderIsOpen = true
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+
+                5 -> {
+                    // Sliderを戻す
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                    state.leftSliderTargetPosition = 0
+                    state.rightSliderTargetPosition = 0
+                    state.liftIsUp = false
+                    state.flipIsUpward = false
+                }
+
+                6 -> {
+                    // 500ミリ秒横に進む
+                    state.leftStickX = - 0.5
+                    state.leftStickY = 0.0
+                }
+
+                7 -> {
+                    // 500ミリ秒前に進む
+                    state.leftStickX = 0.0
+                    state.leftStickY = -0.5
+                }
+
+                8 -> {
+                    // 停止
+                    state.leftStickX = 0.0
+                    state.leftStickY = 0.0
+                }
+                // 以下同様に追加
+                // ...
+            }
             // Stateを適用
             components.forEach { component ->
                 component.applyState(state)
@@ -181,7 +159,5 @@ class AutonomousBlueClose : LinearOpMode() {
             Util.sendLog(state, telemetry)
             telemetry.update()
         }
-
-        telemetry.update()
     }
 }

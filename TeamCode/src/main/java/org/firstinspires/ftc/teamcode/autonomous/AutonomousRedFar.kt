@@ -36,7 +36,7 @@ class AutonomousRedFar : LinearOpMode() {
                 //1
                 Const.Autonomous.verticalMovement,
                 //2
-                2100,
+                3000,
                 //3
                 Const.Autonomous.slider,
                 //4
@@ -44,22 +44,10 @@ class AutonomousRedFar : LinearOpMode() {
                 //5
                 Const.Autonomous.slider,
                 //6
-                Const.Autonomous.minimumMove,
+                Const.Autonomous.enterTime,
                 //7
-                Const.Autonomous.holder,
+                Const.Autonomous.enterTime - 500,
                 //8
-                Const.Autonomous.minimumMove,
-                //9
-                Const.Autonomous.slider,
-                //12
-                Const.Autonomous.holder,
-                //13
-                Const.Autonomous.slider,
-                //14
-                Const.Autonomous.enterTime,
-                //15
-                Const.Autonomous.enterTime,
-                //16
                 10,
                 // 以下同様に追加
                 // ...
@@ -82,7 +70,7 @@ class AutonomousRedFar : LinearOpMode() {
             telemetry.addData("Status", "Run Time: $runtime")
             state.stateReset()
             //現在時刻から前回phaseが切り替わったときの時間を引いて、それが設定した時間以上だったら、phaseを次に進める
-            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 14) {
+            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 8) {
                 phaseCount++
                 beforeTime = System.currentTimeMillis()
             }
@@ -94,7 +82,7 @@ class AutonomousRedFar : LinearOpMode() {
                 0 -> {
                     // ちょっと後ろに進む
                     state.holderIsOpen = false
-                    state.leftStickX = -0.5
+                    state.leftStickX = 0.5
                     state.leftStickY = 0.0
                 }
 
@@ -143,57 +131,18 @@ class AutonomousRedFar : LinearOpMode() {
                 }
 
                 6 -> {
-                    state.leftStickY = 0.5
+                    // 500ミリ秒横に進む
+                    state.leftStickX = 0.5
+                    state.leftStickY = 0.0
                 }
 
                 7 -> {
-                    // Holderを閉じる
-                    state.leftStickY = 0.0
-                    state.holderIsOpen = false
-                }
-
-                8 -> {
-                    state.leftStickY = -0.5
-                }
-
-                9 -> {
-                    // Sliderを再び上げる
-                    state.leftStickX = 0.0
-                    state.leftStickY = 0.0
-                    state.leftSliderTargetPosition = Const.Slider.Position.top
-                    state.rightSliderTargetPosition = Const.Slider.Position.top
-                    state.liftIsUp = true
-                    state.flipIsUpward = true
-                }
-
-                10 -> {
-                    // Holderを開く
-                    state.holderIsOpen = true
-                    state.leftStickX = 0.0
-                    state.leftStickY = 0.0
-                }
-
-                11 -> {
-                    // Sliderを戻す
-                    state.leftSliderTargetPosition = 0
-                    state.rightSliderTargetPosition = 0
-                    state.liftIsUp = false
-                    state.flipIsUpward = false
-                }
-
-                12 -> {
-                    // 500ミリ秒横に進む
-                    state.leftStickX = -0.5
-                    state.leftStickY = 0.0
-                }
-
-                13 -> {
                     // 500ミリ秒前に進む
                     state.leftStickX = 0.0
                     state.leftStickY = -0.5
                 }
 
-                14 -> {
+                8 -> {
                     // 停止
                     state.leftStickX = 0.0
                     state.leftStickY = 0.0

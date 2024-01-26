@@ -126,10 +126,10 @@ class Const {
             const val slider = 1500
             const val holder = 500
             const val lateralMovement = 1900
-            const val verticalMovement = 500
+            const val verticalMovement = 700
             const val shortenDistance = 300
             const val backTime = 600
-            const val enterTime = 500
+            const val enterTime = 1600
             const val minimumMove = 200
         }
     }
