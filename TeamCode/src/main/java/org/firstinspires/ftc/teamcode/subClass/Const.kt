@@ -81,7 +81,7 @@ class Const {
                 const val rightFront = "motor_1"
                 const val leftRear = "motor_2"
                 const val rightRear = "motor_3"
-                const val imu = "imu"
+                const val imu = "imu2"
             }
         }
         class Direction{
@@ -125,8 +125,8 @@ class Const {
         companion object{
             const val slider = 1500
             const val holder = 500
-            const val lateralMovement = 2500
-            const val verticalMovement = 2500
+            const val lateralMovement = 1900
+            const val verticalMovement = 500
             const val shortenDistance = 300
             const val backTime = 600
             const val enterTime = 500

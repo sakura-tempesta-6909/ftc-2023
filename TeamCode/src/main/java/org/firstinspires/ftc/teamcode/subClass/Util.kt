@@ -7,6 +7,7 @@ import kotlin.math.abs
 class Util {
     companion object {
         fun sendLog(state: State, telemetry: Telemetry) {
+            telemetry.addData("botHeading",state.botHeading)
             telemetry.addData("dronelauncher",state.dronelauncherPosition)
             telemetry.addData("leftSlider.currentPosition < Const.Slider.tolerance",state.leftSliderCurrentPosition < Const.Slider.tolerance)
             telemetry.addData("rightSlider.currentPosition < Const.Slider.tolerance",state.rightSliderCurrentPosition<Const.Slider.tolerance)

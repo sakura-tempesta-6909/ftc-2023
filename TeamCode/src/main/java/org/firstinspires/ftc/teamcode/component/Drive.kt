@@ -74,6 +74,13 @@ class Drive(hardwareMap: HardwareMap) : Component {
         // ロボットの方向を取得
         val botHeading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
         if (state.imuIsReset) {
+            val parameters = IMU.Parameters(
+                    RevHubOrientationOnRobot(
+                            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                    )
+            )
+            imu.initialize(parameters)
             imu.resetYaw()
         }
         val x = state.leftStickX
@@ -100,6 +107,6 @@ class Drive(hardwareMap: HardwareMap) : Component {
         leftRear.power = state.leftRearPower
         rightRear.power = state.rightRearPower
 
-
+        state.botHeading = botHeading
     }
 }
