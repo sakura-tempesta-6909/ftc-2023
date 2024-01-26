@@ -31,6 +31,8 @@ class AutonomousRedFar : LinearOpMode() {
 
         // ターゲット時間の定義
         val targetTimes = listOf(
+
+                400,
                 //0
                 Const.Autonomous.lateralMovement,
                 //1
@@ -95,8 +97,13 @@ class AutonomousRedFar : LinearOpMode() {
             startTimes.forEachIndexed { index, start ->
                 val elapsedTime = System.currentTimeMillis() - startTime
                 if (elapsedTime in start until start + targetTimes[index]) {
+                    telemetry.addData("mode",index)
+                    telemetry.update()
                     when (index) {
                         0 -> {
+                            state.holderIsOpen = false
+                        }
+                        1 -> {
                             // ちょっと後ろに進む
                             state.holderIsOpen = false
                             state.leftStickX = - 0.5
@@ -104,24 +111,24 @@ class AutonomousRedFar : LinearOpMode() {
                             telemetry.addData("mode",index)
                             telemetry.update()
                         }
-                        1 -> {
+                        2 -> {
                             // ちょっと前に進む
                             state.leftStickX = 0.0
                             state.leftStickY = -0.5
                             telemetry.addData("mode",index)
                             telemetry.update()
                         }
-                        2 -> {
+                        3 -> {
                             // また横に進む
                             state.leftStickX = 0.5
                             state.leftStickY = 0.0
                         }
-                        3 -> {
+                        4 -> {
                             // さらに前に進む
                             state.leftStickX = 0.0
                             state.leftStickY = -0.5
                         }
-                        4 -> {
+                        5 -> {
                             // Sliderの動作と各種設定
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -131,13 +138,13 @@ class AutonomousRedFar : LinearOpMode() {
                             state.liftIsUp = true
                             state.flipIsUpward = true
                         }
-                        5 -> {
+                        6 -> {
                             // Holderを開く
                             state.holderIsOpen = true
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
                         }
-                        6 -> {
+                        7 -> {
                             // Sliderを戻す
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -146,18 +153,18 @@ class AutonomousRedFar : LinearOpMode() {
                             state.liftIsUp = false
                             state.flipIsUpward = false
                         }
-                        7 ->{
+                        8 ->{
                             state.leftStickY =  0.5
                         }
-                        8 -> {
+                        9 -> {
                             // Holderを閉じる
                             state.leftStickY = 0.0
                             state.holderIsOpen = false
                         }
-                        9 ->{
+                        10 ->{
                             state.leftStickY = - 0.5
                         }
-                        10 -> {
+                        11 -> {
                             // Sliderを再び上げる
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
@@ -166,30 +173,30 @@ class AutonomousRedFar : LinearOpMode() {
                             state.liftIsUp = true
                             state.flipIsUpward = true
                         }
-                        11 -> {
+                        12 -> {
                             // Holderを開く
                             state.holderIsOpen = true
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0
                         }
-                        12 -> {
+                        13 -> {
                             // Sliderを戻す
                             state.leftSliderTargetPosition = 0
                             state.rightSliderTargetPosition = 0
                             state.liftIsUp = false
                             state.flipIsUpward = false
                         }
-                        13 -> {
+                        14 -> {
                             // 500ミリ秒横に進む
                             state.leftStickX = - 0.5
                             state.leftStickY = 0.0
                         }
-                        14 -> {
+                        15 -> {
                             // 500ミリ秒前に進む
                             state.leftStickX = 0.0
                             state.leftStickY = -0.5
                         }
-                        15 -> {
+                        16 -> {
                             // 停止
                             state.leftStickX = 0.0
                             state.leftStickY = 0.0

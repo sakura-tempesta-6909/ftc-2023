@@ -41,7 +41,7 @@ class a : LinearOpMode() {
 //                Const.Autonomous.backTime,
 //                //4
 
-                100,
+                400,
 
                 Const.Autonomous.slider,
                 //5
@@ -143,6 +143,7 @@ class a : LinearOpMode() {
                         }
                         5 -> {
                             // Holderを閉じる
+                            state.leftStickY = 0.0
                             state.holderIsOpen = false
                             telemetry.addData("mode",index)
                             telemetry.update()
