@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
 import org.firstinspires.ftc.teamcode.subClass.Const
 
-@Autonomous(name = "RedFarPark", group = "Park")
-class Autonomous : LinearOpMode() {
+@Autonomous(name = "BlueFarPark", group = "Park")
+class BlueFarPark : LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -36,13 +36,10 @@ class Autonomous : LinearOpMode() {
                 //1
                 Const.Autonomous.verticalMovement,
                 //2
-                2100,
+                3000,
                 //3
                 Const.Autonomous.enterTime,
-                //4
-                Const.Autonomous.enterTime - 500,
-                //5
-                10,
+                //7
                 // 以下同様に追加
                 // ...
         )
@@ -64,7 +61,7 @@ class Autonomous : LinearOpMode() {
             telemetry.addData("Status", "Run Time: $runtime")
             state.stateReset()
             //現在時刻から前回phaseが切り替わったときの時間を引いて、それが設定した時間以上だったら、phaseを次に進める
-            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 8) {
+            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 3 ) {
                 phaseCount++
                 beforeTime = System.currentTimeMillis()
             }
@@ -95,22 +92,11 @@ class Autonomous : LinearOpMode() {
                     state.leftSliderTargetPosition = 0
                     state.rightSliderTargetPosition = 0
                 }
+
                 3 -> {
                     // 500ミリ秒横に進む
-                    state.leftStickX = 0.5
-                    state.leftStickY = 0.0
-                }
-
-                4 -> {
-                    // 500ミリ秒前に進む
                     state.leftStickX = 0.0
-                    state.leftStickY = -0.5
-                }
-
-                5 -> {
-                    // 停止
-                    state.leftStickX = 0.0
-                    state.leftStickY = 0.0
+                    state.leftStickY = - 0.5
                 }
                 // 以下同様に追加
                 // ...

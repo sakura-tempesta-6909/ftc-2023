@@ -73,6 +73,7 @@ class Drive(hardwareMap: HardwareMap) : Component {
 
         // ロボットの方向を取得
         val botHeading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
+//        val botHeading = 0.0
         if (state.imuIsReset) {
             val parameters = IMU.Parameters(
                     RevHubOrientationOnRobot(
@@ -108,5 +109,11 @@ class Drive(hardwareMap: HardwareMap) : Component {
         rightRear.power = state.rightRearPower
 
         state.botHeading = botHeading
+
+        if (botHeading < 0.1){
+            state.botheadingIsZero = true
+        }else{
+            state.botheadingIsZero = false
+        }
     }
 }

@@ -114,50 +114,52 @@ class Main : OpMode() {
         } else if (gamepad2.y) {
             state.holderIsOpen = false
         }
-            if (state.twoDpadUP) {
-                state.liftIsUp = true
-            } else if (state.twoDpadDown) {
-                state.liftIsUp = false
-            }
-            if (state.twoDpadUP) {
-                state.flipIsUpward = true
-            } else if (state.twoDpadDown) {
-                state.flipIsUpward = false
-            }
-            if (gamepad2.a) {
-                state.sliderState = SliderStates.MoveSliderToPosition
-                state.leftSliderTargetPosition = Const.Slider.Position.climb
-                state.rightSliderTargetPosition = Const.Slider.Position.climb
-                state.sliderPower = Const.Slider.Speed.targetToPosition
-                state.liftIsUp = false
-                state.flipIsUpward = false
-            }
-        if (gamepad2.right_trigger > 0){
+        if (state.twoDpadUP) {
+            state.liftIsUp = true
+        } else if (state.twoDpadDown) {
+            state.liftIsUp = false
+        }
+        if (state.twoDpadUP) {
+            state.flipIsUpward = true
+        } else if (state.twoDpadDown) {
+            state.flipIsUpward = false
+        }
+        if (gamepad2.a) {
+            state.sliderState = SliderStates.MoveSliderToPosition
+            state.leftSliderTargetPosition = Const.Slider.Position.climb
+            state.rightSliderTargetPosition = Const.Slider.Position.climb
+            state.sliderPower = Const.Slider.Speed.targetToPosition
+            state.liftIsUp = false
+            state.flipIsUpward = false
+        }
+        if (gamepad2.right_trigger > 0) {
             state.leftSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
             state.rightSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
-        }else if(gamepad2.left_trigger > 0){
+        } else if (gamepad2.left_trigger > 0) {
             state.leftSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
             state.rightSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
         }
 
-            state.twoDpadDown = gamepad2.dpad_down
-            state.twoDpadUP = gamepad2.dpad_up
-            state.oneDpadY = gamepad1.y
-            state.oneDpadX = gamepad1.x
-            state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
-            state.imuIsReset = gamepad1.start
-            state.leftStickX = gamepad1.left_stick_x.toDouble()
-            state.leftStickY = gamepad1.left_stick_y.toDouble()
-            state.rightStickX = gamepad1.right_stick_x.toDouble()
+        state.initialize = gamepad2.b
+        state.twoDpadDown = gamepad2.dpad_down
+        state.twoDpadUP = gamepad2.dpad_up
+        state.oneDpadY = gamepad1.y
+        state.oneDpadX = gamepad1.x
+        state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
+        state.imuIsReset = gamepad1.start
+        state.leftStickX = gamepad1.left_stick_x.toDouble()
+        state.leftStickY = gamepad1.left_stick_y.toDouble()
+        state.rightStickX = gamepad1.right_stick_x.toDouble()
 
-            //Stateを適用
-            components.forEach { component ->
-                component.applyState(state)
-            }
-            //数値を出力
-            Util.sendLog(state, telemetry)
+        //Stateを適用
+        components.forEach { component ->
+            component.applyState(state)
+        }
+        //数値を出力
+        Util.sendLog(state, telemetry)
 
     }
+
     /*
    * コードが停止されるときに一度だけ実行される
    */

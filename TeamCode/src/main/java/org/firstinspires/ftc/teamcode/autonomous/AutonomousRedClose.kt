@@ -46,7 +46,7 @@ class AutonomousRedClose: LinearOpMode() {
                 //6
                 Const.Autonomous.enterTime,
                 //7
-                Const.Autonomous.enterTime - 700,
+                (Const.Autonomous.enterTime - 700) / 3,
                 //8
                 10,
                 // 以下同様に追加

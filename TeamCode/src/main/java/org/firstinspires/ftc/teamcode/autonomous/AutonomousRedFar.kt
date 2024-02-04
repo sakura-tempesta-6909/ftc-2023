@@ -36,7 +36,7 @@ class AutonomousRedFar : LinearOpMode() {
                 //1
                 Const.Autonomous.verticalMovement,
                 //2
-                3000,
+                300,
                 //3
                 Const.Autonomous.slider,
                 //4

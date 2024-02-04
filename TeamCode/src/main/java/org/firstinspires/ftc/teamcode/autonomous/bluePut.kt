@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Util
 import org.firstinspires.ftc.teamcode.subClass.Const
 
-@Autonomous(name = "RedFarPark", group = "Park")
-class Autonomous : LinearOpMode() {
+@Autonomous(name = "bluePut", group = "put")
+class bluePut: LinearOpMode() {
     private val runtime = ElapsedTime()
     private val components = ArrayList<Component>()
     private val state = State()
@@ -34,17 +34,12 @@ class Autonomous : LinearOpMode() {
                 //0
                 Const.Autonomous.lateralMovement,
                 //1
-                Const.Autonomous.verticalMovement,
+                500,
                 //2
-                2100,
-                //3
-                Const.Autonomous.enterTime,
-                //4
-                Const.Autonomous.enterTime - 500,
-                //5
-                10,
-                // 以下同様に追加
+                Const.Autonomous.verticalMovement,
                 // ...
+                1575,
+                1000,
         )
 
         // ターゲット時間ごとの開始時間
@@ -62,9 +57,10 @@ class Autonomous : LinearOpMode() {
         var phaseCount = 0
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: $runtime")
+            telemetry.addData("phase",phaseCount)
             state.stateReset()
             //現在時刻から前回phaseが切り替わったときの時間を引いて、それが設定した時間以上だったら、phaseを次に進める
-            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 8) {
+            if (System.currentTimeMillis() - beforeTime >= targetTimes[phaseCount] && phaseCount < 4) {
                 phaseCount++
                 beforeTime = System.currentTimeMillis()
             }
@@ -77,7 +73,7 @@ class Autonomous : LinearOpMode() {
                     // ちょっと後ろに進む
                     state.holderIsOpen = false
                     state.leftStickX = 0.5
-                    state.leftStickY = 0.0
+                    state.leftStickY = 0.02
                 }
 
                 1 -> {
@@ -91,29 +87,23 @@ class Autonomous : LinearOpMode() {
 
                 2 -> {
                     state.leftStickX = 0.0
-                    state.leftStickY = -0.5
-                    state.leftSliderTargetPosition = 0
-                    state.rightSliderTargetPosition = 0
+                    state.leftStickY = 0.3
                 }
+
                 3 -> {
-                    // 500ミリ秒横に進む
+                    // Sliderの動作と各種設定
                     state.leftStickX = 0.5
                     state.leftStickY = 0.0
                 }
 
                 4 -> {
-                    // 500ミリ秒前に進む
-                    state.leftStickX = 0.0
-                    state.leftStickY = -0.5
-                }
-
-                5 -> {
-                    // 停止
+                    // Sliderの動作と各種設定
                     state.leftStickX = 0.0
                     state.leftStickY = 0.0
+                    state.leftSliderTargetPosition = 0
+                    state.rightSliderTargetPosition = 0
                 }
-                // 以下同様に追加
-                // ...
+
             }
             // Stateを適用
             components.forEach { component ->

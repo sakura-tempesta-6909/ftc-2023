@@ -31,7 +31,7 @@ class Const {
         //モーターの速度
         class Speed {
             companion object {
-                const val targetToPosition = 0.7
+                const val targetToPosition = 0.8
             }
         }
 
@@ -81,7 +81,7 @@ class Const {
                 const val rightFront = "motor_1"
                 const val leftRear = "motor_2"
                 const val rightRear = "motor_3"
-                const val imu = "imu2"
+                const val imu = "imu"
             }
         }
         class Direction{
@@ -125,11 +125,11 @@ class Const {
         companion object{
             const val slider = 1500
             const val holder = 500
-            const val lateralMovement = 1900
-            const val verticalMovement = 700
+            const val lateralMovement = 1600
+            const val verticalMovement = 500
             const val shortenDistance = 300
             const val backTime = 600
-            const val enterTime = 1600
+            const val enterTime = 3000
             const val minimumMove = 200
         }
     }

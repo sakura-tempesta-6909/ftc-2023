@@ -32,6 +32,8 @@ class State() {
     var dronelauncherPosition = 0.0
     var droneDirection = Servo.Direction.REVERSE
     var botHeading = 0.0
+    var initialize = false
+    var botheadingIsZero = true
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -61,6 +63,8 @@ class State() {
         oneDpadX = false
         oneDpadY = false
         botHeading = 0.0
+        initialize = false
+        botheadingIsZero = true
     }
 
     fun stateReset() {

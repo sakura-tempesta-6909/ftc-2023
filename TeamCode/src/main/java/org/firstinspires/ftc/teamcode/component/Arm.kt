@@ -50,25 +50,31 @@ class Arm(hardwareMap: HardwareMap) : Component {
     }
 
     override fun applyState(state: State) {
-        if (state.liftIsUp) {
-            if (abs((lift.currentPosition - Const.Arm.Motor.Position.liftUpperLimit)) < 50) {
-                lift.power = 0.0
-            }else{
-                lift.power = 0.5
+
+        if (state.initialize) {
+            lift.targetPosition = lift.targetPosition - 10
+            lift.power = 0.6
+        }else {
+            if (state.liftIsUp) {
+                if (abs((lift.currentPosition - Const.Arm.Motor.Position.liftUpperLimit)) < 50) {
+                    lift.power = 0.0
+                } else {
+                    lift.power = 0.6
+                }
+                lift.targetPosition = Const.Arm.Motor.Position.liftUpperLimit
+            } else {
+                if (lift.currentPosition < 50) {
+                    lift.power = 0.0
+                } else {
+                    lift.power = 0.6
+                }
+                lift.targetPosition = 15
             }
-            lift.targetPosition = Const.Arm.Motor.Position.liftUpperLimit
-        } else {
-            if (lift.currentPosition < 50){
-                lift.power = 0.0
-            }else{
-                lift.power = 0.5
-            }
-            lift.targetPosition = 15
         }
         if (state.holderIsOpen) {
             holder.position = 0.0
         } else {
-            holder.position = 0.7
+            holder.position = 0.6
         }
         if (state.flipIsUpward ){
             if (lift.currentPosition < 300) {
@@ -77,7 +83,5 @@ class Arm(hardwareMap: HardwareMap) : Component {
         }else{
             flip.position = 0.0
         }
-
-
     }
 }
