@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.state
 
-import com.qualcomm.robotcore.hardware.IMU
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.subClass.Const
 
@@ -34,6 +33,11 @@ class State() {
     var botHeading = 0.0
     var initialize = false
     var botheadingIsZero = true
+    var aprilTag = 0
+    var detectedObject = ""
+    var pixelPosition = ""
+    var left = 0.0
+    var right = 0.0
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -65,12 +69,20 @@ class State() {
         botHeading = 0.0
         initialize = false
         botheadingIsZero = true
+        aprilTag = 0
+        detectedObject = ""
+        pixelPosition = ""
+        left = 0.0
+        right = 0.0
     }
 
     fun stateReset() {
         leftSliderCurrentPosition = 0
         rightSliderCurrentPosition = 0
         liftCurrentPosition = 0
+        aprilTag = 0
+        detectedObject = ""
+        pixelPosition = ""
     }
 }
 

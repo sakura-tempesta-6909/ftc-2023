@@ -8,6 +8,11 @@ class Util {
     companion object {
         fun sendLog(state: State, telemetry: Telemetry) {
             telemetry.addData("robotCentric",state.botheadingIsZero)
+            telemetry.addData("aprilTag",state.aprilTag)
+            telemetry.addData("object",state.detectedObject)
+            telemetry.addData("pixelPosition",state.pixelPosition)
+            telemetry.addData("right",state.right)
+            telemetry.addData("left",state.left)
 //            telemetry.addData("botHeading",state.botHeading)
 //            telemetry.addData("dronelauncher",state.dronelauncherPosition)
 //            telemetry.addData("leftSlider.currentPosition < Const.Slider.tolerance",state.leftSliderCurrentPosition < Const.Slider.tolerance)

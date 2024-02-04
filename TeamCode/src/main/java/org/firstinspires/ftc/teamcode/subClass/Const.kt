@@ -133,4 +133,25 @@ class Const {
             const val minimumMove = 200
         }
     }
+
+    class Camera{
+        class Name {
+            companion object {
+                const val camera = "main"
+            }
+        }
+        class Position{
+            companion object{
+                const val left = Size.width/3
+                const val center = Size.width/3*2
+                const val right = Size.width
+            }
+        }
+        class Size{
+            companion object{
+                const val width = 1280
+                const val height = 720
+            }
+        }
+    }
 }
