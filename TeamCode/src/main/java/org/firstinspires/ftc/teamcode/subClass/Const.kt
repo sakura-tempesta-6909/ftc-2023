@@ -37,9 +37,10 @@ class Const {
 
         class Position {
             companion object {
-                const val medium = 1000
-                const val top = 2000
-                const val climb = 2400
+                const val medium = -1000
+                const val auttoMedium = -1700
+                const val top = -2000
+                const val climb = -2400
                 const val motor_adjustment_quantity = 10
             }
         }
