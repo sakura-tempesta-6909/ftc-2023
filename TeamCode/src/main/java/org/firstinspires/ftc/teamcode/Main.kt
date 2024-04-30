@@ -14,19 +14,26 @@ class Main : OpMode() {
     lateinit var drive: SampleMecanumDrive
     lateinit var traj1:Trajectory
     lateinit var traj2:Trajectory
+    lateinit var traj3:Trajectory
+    lateinit var traj4:Trajectory
 
+    //インチで記載する(base:24)
     override fun init() {
         drive = SampleMecanumDrive(hardwareMap)
-        val startPose = Pose2d(0.0, 0.0, Math.toRadians(0.0))
+        val startPose = Pose2d(-36.0, 60.0, Math.toRadians(0.0))
         drive.poseEstimate = startPose
         traj1 = drive.trajectoryBuilder(startPose)
-                .back(10.0)
+                .splineTo(Vector2d(-36.0,12.0),0.0)
                 .addDisplacementMarker{ drive.followTrajectoryAsync(traj2) }
                 .build()
         traj2 = drive.trajectoryBuilder(traj1.end())
-                .forward(10.0)
+                .splineTo(Vector2d(36.0,12.0),90.0)
+                .addDisplacementMarker{ drive.followTrajectoryAsync(traj3) }
                 .build()
-        drive.followTrajectoryAsync(traj1);
+        traj3 = drive.trajectoryBuilder(traj2.end())
+                .splineTo(Vector2d(-36.0,60.0),9.0)
+                .build()
+        drive.followTrajectoryAsync(traj1)
     }
 
     override fun loop() {
