@@ -73,8 +73,8 @@ class PutPixel : OpMode() {
                 //スライダーを上げる
                 .addTemporalMarker{
                     state.sliderState = SliderStates.MoveSliderToPosition
-                    state.leftSliderTargetPosition = Const.Slider.Position.auttoMedium
-                    state.rightSliderTargetPosition = Const.Slider.Position.auttoMedium
+                    state.leftSliderTargetPosition = Const.Slider.Position.autoMedium
+                    state.rightSliderTargetPosition = Const.Slider.Position.autoMedium
                     state.sliderPower = Const.Slider.Speed.targetToPosition
                     state.flipIsUpward = true
                     state.liftIsUp = true
