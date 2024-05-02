@@ -54,12 +54,49 @@ class PutPixel : OpMode() {
                 //少し後退
                 .lineToLinearHeading(Pose2d(-36.0, 36.0, Math.toRadians(90.0)))
                 //手前によける&回転
-                .lineToLinearHeading(Pose2d(-65.0, 36.0, Math.toRadians(0.0)))
+                .lineToSplineHeading(Pose2d(-65.0, 36.0, Math.toRadians(0.0)))
+                //スライダを上げる
+                .addTemporalMarker{
+                    state.sliderState = SliderStates.MoveSliderToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.low
+                    state.rightSliderTargetPosition = Const.Slider.Position.low
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                }
+                .waitSeconds(0.5)
                 //ピクセルをつかむ
                 .addTemporalMarker{
                     state.holderIsOpen = false
                 }
-                .waitSeconds(0.2)
+                .waitSeconds(0.5)
+                //スライダを上げる
+                .addTemporalMarker{
+                    state.sliderState = SliderStates.MoveSliderToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.middle
+                    state.rightSliderTargetPosition = Const.Slider.Position.middle
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                }
+                .waitSeconds(0.5)
+                //少し後退
+                .lineToLinearHeading(Pose2d(-60.0, 36.0, Math.toRadians(0.0)))
+                .waitSeconds(0.5)
+                //スライダを下げる
+                .addTemporalMarker{
+                    state.sliderState = SliderStates.MoveSliderToPosition
+                    state.leftSliderTargetPosition = Const.Slider.Position.zero
+                    state.rightSliderTargetPosition = Const.Slider.Position.zero
+                    state.sliderPower = Const.Slider.Speed.targetToPosition
+                }
+                .waitSeconds(0.3)
+                //ピクセルを離す
+                .addTemporalMarker{
+                    state.holderIsOpen = true
+                }
+                .waitSeconds(0.3)
+                //ピクセルを掴む
+                .addTemporalMarker{
+                    state.holderIsOpen = false
+                }
+                .waitSeconds(0.3)
                 //中央へ移動
                 .lineToConstantHeading(Vector2d(-50.0, 12.0))
                 //バックステージへ向かう
@@ -70,6 +107,7 @@ class PutPixel : OpMode() {
                     state.holderIsOpen = false
                 }
                 .waitSeconds(0.3)
+
                 //スライダーを上げる
                 .addTemporalMarker{
                     state.sliderState = SliderStates.MoveSliderToPosition
