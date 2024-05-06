@@ -65,6 +65,16 @@ class Const {
             class Position{
                 companion object{
                     const val liftUpperLimit =680
+                    const val liftdown = 50
+                    const val holderIsclosed = 0.7
+                    const val flipIsRotatable = 300
+                    const val flipIsUpper = 0.65
+                }
+            }
+
+            class Power{
+                companion object{
+                    const val liftMoving = 0.5
                 }
             }
 

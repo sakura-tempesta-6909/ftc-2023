@@ -86,34 +86,54 @@ class Main : OpMode() {
         components.forEach { component ->
             component.readSensors(state)
         }
-        //操作関連コマンド
+        //上ボタンが押されたとき
         if (gamepad2.dpad_up) {
+            //Stateをモータが動いているように変更
             state.sliderState = SliderStates.MoveSliderToPosition
+            //モータの目標位置を上側に変更
             state.leftSliderTargetPosition = Const.Slider.Position.top
             state.rightSliderTargetPosition = Const.Slider.Position.top
+            //モータのパワー変更
             state.sliderPower = Const.Slider.Speed.targetToPosition
         } else if (gamepad2.dpad_down) {
+            //上ボタンが押されていなくて下ボタンが押されたときの処理
+            //Stateをモータが動いているように変更
             state.sliderState = SliderStates.MoveSliderToPosition
+            //モータの目標位置を下側に変更
             state.leftSliderTargetPosition = 0
             state.rightSliderTargetPosition = 0
+            //モータのパワー変更
             state.sliderPower = Const.Slider.Speed.targetToPosition
         }
         if (gamepad1.x) {
+            //Xボタンが押されたとき　
+            //ホルダーを開ける
             state.holderIsOpen = true
         } else if (gamepad1.y) {
+            //Xボタンが押されていなくてYボタンが押されたとき
+            //ホルダーを閉める
             state.holderIsOpen = false
         }
         if (gamepad2.dpad_up) {
+            //上ボタンが押されたとき
+            //Stateを変更
             state.liftIsUp = true
         } else if (gamepad2.dpad_down) {
+            //下ボタンが押されたとき
+            //Stateを変更
             state.liftIsUp = false
         }
         if (gamepad2.dpad_up) {
+            //上ボタンが押されたとき
+            //Stateを変更
             state.flipIsUpward = true
         } else if (gamepad2.dpad_down) {
+            //下ボタンが押されたとき
+            //Stateを変更
             state.flipIsUpward = false
         }
         if (gamepad2.a){
+            //aボタンが押されたとき
             state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = Const.Slider.Position.climb
             state.rightSliderTargetPosition = Const.Slider.Position.climb

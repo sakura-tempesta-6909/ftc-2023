@@ -46,35 +46,49 @@ class Arm(hardwareMap: HardwareMap) : Component {
     }
 
     override fun readSensors(state: State) {
+        //Stateにリフトの現在位置を反映
         state.liftCurrentPosition = lift.currentPosition
     }
 
     override fun applyState(state: State) {
+
         if (state.liftIsUp) {
+            //リフトを上げる際の処理
             if (abs((lift.currentPosition - Const.Arm.Motor.Position.liftUpperLimit)) < 50) {
+                //リフトが既に上がっている場合モーターに力を加えない
                 lift.power = 0.0
             }else{
-                lift.power = 0.5
+                //リフトが上がっていない場合モーターに力を加える
+                lift.power = Const.Arm.Motor.Power.liftMoving
             }
+            //リフトの目標位置を上側に設定
             lift.targetPosition = Const.Arm.Motor.Position.liftUpperLimit
         } else {
-            if (lift.currentPosition < 50){
+            //リフトを下げる際の処理
+            if (lift.currentPosition < Const.Arm.Motor.Position.liftdown){
+                //リフトが既に下がっている場合モーターに力を加えない
                 lift.power = 0.0
             }else{
-                lift.power = 0.5
+                //リフトが上がっている場合モーターに力を加える
+                lift.power = Const.Arm.Motor.Power.liftMoving
             }
+            //リフトの目標位置を下に設定
             lift.targetPosition = 0
         }
         if (state.holderIsOpen) {
+            //ホルダーを開ける場合サーボモータの位置を変更
             holder.position = 0.0
         } else {
-            holder.position = 0.7
+            //ホルダーを閉める場合サーボモータの位置を変更
+            holder.position = Const.Arm.Motor.Position.holderIsclosed
         }
         if (state.flipIsUpward ){
-            if (lift.currentPosition < 300) {
-                flip.position = 0.65
+            if (lift.currentPosition < Const.Arm.Motor.Position.flipIsRotatable) {
+                //フリップを上向きにするとき、リフトがある程度上がっていれば上を向かせる
+                flip.position = Const.Arm.Motor.Position.flipIsUpper
             }
         }else{
+            //フリップを下向きにする
             flip.position = 0.0
         }
 
