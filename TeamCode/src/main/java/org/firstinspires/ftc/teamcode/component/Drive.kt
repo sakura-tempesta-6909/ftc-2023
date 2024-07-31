@@ -27,6 +27,8 @@ class Drive(hardwareMap: HardwareMap) : Component {
         rightRear = hardwareMap.get(DcMotor::class.java,Const.Drive.Name.rightRear)
         rightRear.direction = Const.Drive.Direction.rightRear
 
+
+
         // IMU（慣性計測装置）の初期化
         imu = hardwareMap.get(IMU::class.java,Const.Drive.Name.imu)
         imu.resetYaw()

@@ -80,12 +80,12 @@ class Arm(hardwareMap: HardwareMap) : Component {
             holder.position = 0.0
         } else {
             //ホルダーを閉める場合サーボモータの位置を変更
-            holder.position = Const.Arm.Motor.Position.holderIsclosed
+            holder.position = Const.Arm.Motor.Position.holderclosed
         }
         if (state.flipIsUpward ){
-            if (lift.currentPosition < Const.Arm.Motor.Position.flipIsRotatable) {
+            if (lift.currentPosition < Const.Arm.Motor.Position.flipRotatable) {
                 //フリップを上向きにするとき、リフトがある程度上がっていれば上を向かせる
-                flip.position = Const.Arm.Motor.Position.flipIsUpper
+                flip.position = Const.Arm.Motor.Position.flipUpper
             }
         }else{
             //フリップを下向きにする

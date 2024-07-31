@@ -23,6 +23,10 @@ class State() {
     var rightStickX = 0.0
     var droneIsShot = false
     var driveMagnification = 1.0
+    var leftFrontCurrentPosition = 0
+    var rightFrontCurrentPosition = 0
+    var leftRearCurrentPosition = 0
+    var rightRearCurrentPosition = 0
 
 
     fun stateInit() {
@@ -46,12 +50,17 @@ class State() {
         rightStickX = 0.0
         droneIsShot = false
         driveMagnification = Const.Drive.Speed.highGear
+        leftFrontCurrentPosition = 0
+        rightFrontCurrentPosition = 0
+        leftRearCurrentPosition = 0
+        rightRearCurrentPosition = 0
     }
 
     fun stateReset() {
         leftSliderCurrentPosition = 0
         rightSliderCurrentPosition = 0
         liftCurrentPosition = 0
+
     }
 }
 

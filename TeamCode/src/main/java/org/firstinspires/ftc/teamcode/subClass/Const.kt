@@ -66,9 +66,9 @@ class Const {
                 companion object{
                     const val liftUpperLimit =680
                     const val liftdown = 50
-                    const val holderIsclosed = 0.7
-                    const val flipIsRotatable = 300
-                    const val flipIsUpper = 0.65
+                    const val holderclosed = 0.7
+                    const val flipRotatable = 300
+                    const val flipUpper = 0.65
                 }
             }
 
@@ -85,10 +85,10 @@ class Const {
     class Drive{
         class Name{
             companion object{
-                const val leftFront = "motor_0"
-                const val rightFront = "motor_1"
-                const val leftRear = "motor_2"
-                const val rightRear = "motor_3"
+                const val leftFront = "leftFront"
+                const val rightFront = "rightFront"
+                const val leftRear = "leftRear"
+                const val rightRear = "rightRear"
                 const val imu = "imu"
             }
         }
