@@ -61,7 +61,7 @@ object DriveConstants {
      * empirically tuned.
      */
     @JvmField
-    var kV = 1.0 / rpmToVelocity(MAX_RPM)
+    var kV = 50.0 / rpmToVelocity(MAX_RPM)
     @JvmField
     var kA = 0.0
     @JvmField

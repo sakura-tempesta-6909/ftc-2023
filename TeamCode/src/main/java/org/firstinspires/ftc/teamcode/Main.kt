@@ -62,7 +62,13 @@ class Main : OpMode() {
      * ドライバーがINITを押した後、PLAYを押す前に繰り返し実行するコード
      */
     override fun init_loop() {
-
+        state.stateReset()
+        //センサーの値の取得
+        components.forEach { component ->
+            component.readSensors(state)
+        }
+        //数値を出力
+        Util.sendLog(state, telemetry)
     }
 
     /*
@@ -86,59 +92,59 @@ class Main : OpMode() {
         components.forEach { component ->
             component.readSensors(state)
         }
-        //上ボタンが押されたとき
+        //操作関連コマンド
         if (gamepad2.dpad_up) {
-            //Stateをモータが動いているように変更
             state.sliderState = SliderStates.MoveSliderToPosition
-            //モータの目標位置を上側に変更
             state.leftSliderTargetPosition = Const.Slider.Position.top
             state.rightSliderTargetPosition = Const.Slider.Position.top
-            //モータのパワー変更
             state.sliderPower = Const.Slider.Speed.targetToPosition
         } else if (gamepad2.dpad_down) {
-            //上ボタンが押されていなくて下ボタンが押されたときの処理
-            //Stateをモータが動いているように変更
             state.sliderState = SliderStates.MoveSliderToPosition
-            //モータの目標位置を下側に変更
             state.leftSliderTargetPosition = 0
             state.rightSliderTargetPosition = 0
-            //モータのパワー変更
             state.sliderPower = Const.Slider.Speed.targetToPosition
         }
-        if (gamepad1.x) {
-            //Xボタンが押されたとき　
-            //ホルダーを開ける
+
+        if (state.oneDpadX) {
             state.holderIsOpen = true
-        } else if (gamepad1.y) {
-            //Xボタンが押されていなくてYボタンが押されたとき
-            //ホルダーを閉める
+        } else if (state.oneDpadY) {
+            state.holderIsOpen = false
+        } else if (state.oneDpadX) {
+            state.holderIsOpen = true
+        } else if (gamepad2.y) {
             state.holderIsOpen = false
         }
-        if (gamepad2.dpad_up) {
-            //上ボタンが押されたとき
-            //Stateを変更
+        if (state.twoDpadUP) {
             state.liftIsUp = true
-        } else if (gamepad2.dpad_down) {
-            //下ボタンが押されたとき
-            //Stateを変更
+        } else if (state.twoDpadDown) {
             state.liftIsUp = false
         }
-        if (gamepad2.dpad_up) {
-            //上ボタンが押されたとき
-            //Stateを変更
+        if (state.twoDpadUP) {
             state.flipIsUpward = true
-        } else if (gamepad2.dpad_down) {
-            //下ボタンが押されたとき
-            //Stateを変更
+        } else if (state.twoDpadDown) {
             state.flipIsUpward = false
         }
-        if (gamepad2.a){
-            //aボタンが押されたとき
+        if (gamepad2.a) {
             state.sliderState = SliderStates.MoveSliderToPosition
             state.leftSliderTargetPosition = Const.Slider.Position.climb
             state.rightSliderTargetPosition = Const.Slider.Position.climb
             state.sliderPower = Const.Slider.Speed.targetToPosition
+            state.liftIsUp = false
+            state.flipIsUpward = false
         }
+        if (gamepad2.right_trigger > 0) {
+            state.leftSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
+            state.rightSliderTargetPosition -= Const.Slider.Position.motor_adjustment_quantity
+        } else if (gamepad2.left_trigger > 0) {
+            state.leftSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
+            state.rightSliderTargetPosition += Const.Slider.Position.motor_adjustment_quantity
+        }
+
+        state.initialize = gamepad2.b
+        state.twoDpadDown = gamepad2.dpad_down
+        state.twoDpadUP = gamepad2.dpad_up
+        state.oneDpadY = gamepad1.y
+        state.oneDpadX = gamepad1.x
         state.droneIsShot = gamepad1.right_bumper && gamepad2.right_bumper
         state.imuIsReset = gamepad1.start
         state.leftStickX = gamepad1.left_stick_x.toDouble()
@@ -151,10 +157,11 @@ class Main : OpMode() {
         }
         //数値を出力
         Util.sendLog(state, telemetry)
+
     }
 
     /*
-     * コードが停止されるときに一度だけ実行される
-     */
+   * コードが停止されるときに一度だけ実行される
+   */
     override fun stop() {}
 }

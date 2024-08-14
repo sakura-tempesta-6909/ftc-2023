@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.state
 
+import com.qualcomm.robotcore.hardware.IMU
+import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.subClass.Const
 
-class State() {
+class State {
     var sliderState: SliderStates = SliderStates.Disable
     var leftSliderTargetPosition = 0
     var leftSliderCurrentPosition = 0
@@ -21,13 +23,17 @@ class State() {
     var leftStickX = 0.0
     var leftStickY = 0.0
     var rightStickX = 0.0
+    var twoDpadUP = false
+    var twoDpadDown =false
+    var oneDpadX = false
+    var oneDpadY = false
     var droneIsShot = false
     var driveMagnification = 1.0
-    var leftFrontCurrentPosition = 0
-    var rightFrontCurrentPosition = 0
-    var leftRearCurrentPosition = 0
-    var rightRearCurrentPosition = 0
-
+    var dronelauncherPosition = 0.0
+    var droneDirection = Servo.Direction.REVERSE
+    var botHeading = 0.0
+    var initialize = false
+    var botheadingIsZero = true
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -50,21 +56,25 @@ class State() {
         rightStickX = 0.0
         droneIsShot = false
         driveMagnification = Const.Drive.Speed.highGear
-        leftFrontCurrentPosition = 0
-        rightFrontCurrentPosition = 0
-        leftRearCurrentPosition = 0
-        rightRearCurrentPosition = 0
+        dronelauncherPosition = 1.0
+        droneDirection = Servo.Direction.REVERSE
+        twoDpadUP = false
+        twoDpadDown =false
+        oneDpadX = false
+        oneDpadY = false
+        botHeading = 0.0
+        initialize = false
+        botheadingIsZero = true
     }
 
     fun stateReset() {
         leftSliderCurrentPosition = 0
         rightSliderCurrentPosition = 0
         liftCurrentPosition = 0
-
     }
 }
 
-enum class SliderStates() {
+enum class SliderStates {
     MoveSliderToPosition(),
     Disable(),
 }

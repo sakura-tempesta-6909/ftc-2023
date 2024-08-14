@@ -111,8 +111,8 @@ class ManualFeedforwardTuner : LinearOpMode() {
 
     companion object {
         var DISTANCE = 72.0 // in
-        var MAX_VEL = 30.0 // adjust as needed
-        var MAX_ACCEL = 30.0 // adjust as needed
+        var MAX_VEL = 100.0 // adjust as needed
+        var MAX_ACCEL = 100.0 // adjust as needed
         var kV = 0.02 // adjust as needed
         var kA = 0.0004 // adjust as needed
         var kStatic = 0.07// adjust as needed

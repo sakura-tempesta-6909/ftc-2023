@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.component
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.IMU
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
@@ -27,7 +28,10 @@ class Drive(hardwareMap: HardwareMap) : Component {
         rightRear = hardwareMap.get(DcMotor::class.java,Const.Drive.Name.rightRear)
         rightRear.direction = Const.Drive.Direction.rightRear
 
-
+        leftFront.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        leftRear.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        rightRear.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
+        rightFront.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
 
         // IMU（慣性計測装置）の初期化
         imu = hardwareMap.get(IMU::class.java,Const.Drive.Name.imu)
@@ -61,22 +65,25 @@ class Drive(hardwareMap: HardwareMap) : Component {
     }
 
     override fun applyState(state: State) {
-        //スライダーの位置によるモーターのパワー調整
         if (state.leftSliderCurrentPosition < Const.Slider.Position.medium){
-            //スライダーが下がっていればモーターのパワーを等倍にする
             state.driveMagnification = Const.Drive.Speed.highGear
         }else{
-            //スライダーが上がっていればモーターのパワーを半分にする
             state.driveMagnification = Const.Drive.Speed.lowGear
         }
 
         // ロボットの方向を取得
         val botHeading = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
+//        val botHeading = 0.0
         if (state.imuIsReset) {
+            val parameters = IMU.Parameters(
+                    RevHubOrientationOnRobot(
+                            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                    )
+            )
+            imu.initialize(parameters)
             imu.resetYaw()
         }
-
-        //スティックの値を変数化
         val x = state.leftStickX
         val y = state.leftStickY
         val rx = - state.rightStickX
@@ -85,23 +92,24 @@ class Drive(hardwareMap: HardwareMap) : Component {
         var rotX = x * cos(botHeading) - y * sin(botHeading)
         val rotY = - x * sin(botHeading) - y * cos(botHeading)
 
-        //ずれを調整
         rotX *= 1.1
 
-        // モーターのパワーの下限設定
+        // パワーの正規化
         val denominator =
                 (abs(rotY) + abs(rotX) + abs(rx)).coerceAtLeast(1.0)
-        //モーターのパワー設定
+
         state.leftFrontPower = (rotY + rotX + rx) / denominator * state.driveMagnification
         state.leftRearPower = (rotY - rotX + rx) / denominator * state.driveMagnification
         state.rightFrontPower = (rotY - rotX - rx) / denominator * state.driveMagnification
         state.rightRearPower = (rotY + rotX - rx) / denominator * state.driveMagnification
-        //モーターのパワー適用
+
         leftFront.power = state.leftFrontPower
         rightFront.power = state.rightFrontPower
         leftRear.power = state.leftRearPower
         rightRear.power = state.rightRearPower
 
+        state.botHeading = botHeading
 
+        state.botheadingIsZero = botHeading < 0.1
     }
 }

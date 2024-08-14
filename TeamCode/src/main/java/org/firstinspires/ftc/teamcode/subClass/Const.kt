@@ -9,8 +9,8 @@ class Const {
             //モーターの名前
             class Name {
                 companion object {
-                    const val Right = "ex-motor_1"
-                    const val Left = "ex-motor_0"
+                    const val Right = "slider_right"
+                    const val Left = "slider_left"
                 }
             }
 
@@ -31,7 +31,7 @@ class Const {
         //モーターの速度
         class Speed {
             companion object {
-                const val targetToPosition = 0.7
+                const val targetToPosition = 0.8
             }
         }
 
@@ -40,6 +40,7 @@ class Const {
                 const val medium = 1000
                 const val top = 2000
                 const val climb = 2400
+                const val motor_adjustment_quantity = 10
             }
         }
     }
@@ -48,9 +49,9 @@ class Const {
         class Motor {
             class Name {
                 companion object {
-                    const val holder = "servo_1"
-                    const val lift = "ex-motor_3"
-                    const val flip = "servo_0"
+                    const val holder = "holder_servo"
+                    const val lift = "lift_motor"
+                    const val flip = "flip_servo"
                 }
             }
 
@@ -64,17 +65,8 @@ class Const {
 
             class Position{
                 companion object{
-                    const val liftUpperLimit =680
-                    const val liftdown = 50
-                    const val holderclosed = 0.7
-                    const val flipRotatable = 300
-                    const val flipUpper = 0.65
-                }
-            }
-
-            class Power{
-                companion object{
-                    const val liftMoving = 0.5
+                    const val liftUpperLimit = 680
+                    const val liftDownLimit = 15
                 }
             }
 
@@ -114,14 +106,31 @@ class Const {
     class Drone{
         class Name{
             companion object{
-                const val droneLauncher = "servo_2"
+                const val droneLauncher = "drone_servo"
             }
         }
 
         class Position{
             companion object{
-                const val shot = 0.2
+                const val shot = 0.0
             }
+        }
+        class Direction{
+            companion object{
+                val drone = Servo.Direction.FORWARD
+            }
+        }
+    }
+    class Autonomous{
+        companion object{
+            const val slider = 1500
+            const val holder = 500
+            const val lateralMovement = 1600
+            const val verticalMovement = 500
+            const val shortenDistance = 300
+            const val backTime = 600
+            const val enterTime = 3000
+            const val minimumMove = 200
         }
     }
 }
