@@ -72,15 +72,17 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     val voltage = voltageSensor.voltage
                     drive.setDrivePower(Pose2d(NOMINAL_VOLTAGE / voltage * targetPower, 0.0, 0.0))
                     drive.updatePoseEstimate()
-                    val currentVelo = Objects.requireNonNull(
-                        drive.poseVelocity,
-                        "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer."
-                    ).x
 
-                    // update telemetry
-                    telemetry.addData("targetVelocity", motionState.v)
-                    telemetry.addData("measuredVelocity", currentVelo)
-                    telemetry.addData("error", motionState.v - currentVelo!!)
+                    val currentVelo = drive.poseVelocity?.x
+
+                    if (currentVelo != null) {
+                        // update telemetry
+                        telemetry.addData("targetVelocity", motionState.v)
+                        telemetry.addData("measuredVelocity", currentVelo)
+                        telemetry.addData("error", motionState.v - currentVelo)
+                    } else {
+                        telemetry.addLine("Warning: poseVelocity is null.")
+                    }
                 }
 
                 Mode.DRIVER_MODE -> {
