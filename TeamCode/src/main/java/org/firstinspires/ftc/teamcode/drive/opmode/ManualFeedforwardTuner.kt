@@ -75,7 +75,7 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     val currentVelo = Objects.requireNonNull(
                         drive.poseVelocity,
                         "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer."
-                    )?.x
+                    ).x
 
                     // update telemetry
                     telemetry.addData("targetVelocity", motionState.v)
@@ -111,9 +111,9 @@ class ManualFeedforwardTuner : LinearOpMode() {
         var DISTANCE = 72.0 // in
         var MAX_VEL = 30.0 // adjust as needed
         var MAX_ACCEL = 30.0 // adjust as needed
-        var kV = 0.1 // adjust as needed
-        var kA = 0.0 // adjust as needed
-        var kStatic = 0.0// adjust as needed
+        var kV = 0.02 // adjust as needed
+        var kA = 0.0004 // adjust as needed
+        var kStatic = 0.07// adjust as needed
         var RUN_USING_ENCODER = false // adjust as needed
 
         private fun generateProfile(movingForward: Boolean): MotionProfile {
