@@ -21,7 +21,9 @@ object DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    const val TICKS_PER_REV = 1425.1
+    //b
+    const val TICKS_PER_REV = 537.7
+    //o
     const val MAX_RPM = 312.0
 
     /*
@@ -48,11 +50,14 @@ object DriveConstants {
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
     @JvmField
-    var WHEEL_RADIUS = 3.78 // in
+    //b
+    var WHEEL_RADIUS = 1.89 // in
     @JvmField
-    var GEAR_RATIO = 19.2 // output (wheel) speed / input (motor) speed
+    //b
+    var GEAR_RATIO = 1.0 // output (wheel) speed / input (motor) speed
     @JvmField
-    var TRACK_WIDTH = 13.4  // in
+    //little
+    var TRACK_WIDTH = 13.4 // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -75,9 +80,9 @@ object DriveConstants {
      * inches.
      */
     @JvmField
-    var MAX_VEL = 30.0
+    var MAX_VEL = MAX_RPM * GEAR_RATIO * WHEEL_RADIUS * 2 * Math.PI / 60
     @JvmField
-    var MAX_ACCEL =  30.0
+    var MAX_ACCEL =  MAX_RPM * GEAR_RATIO * WHEEL_RADIUS * 2 * Math.PI / 60
     @JvmField
     var MAX_ANG_VEL = Math.toRadians(180.0)
     @JvmField

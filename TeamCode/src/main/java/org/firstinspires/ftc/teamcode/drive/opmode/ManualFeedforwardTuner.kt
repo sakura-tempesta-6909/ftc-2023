@@ -110,12 +110,12 @@ class ManualFeedforwardTuner : LinearOpMode() {
     }
 
     companion object {
-        var DISTANCE = 72.0 // in
-        var MAX_VEL = 100.0 // adjust as needed
-        var MAX_ACCEL = 100.0 // adjust as needed
-        var kV = 0.02 // adjust as needed
-        var kA = 0.0004 // adjust as needed
-        var kStatic = 0.07// adjust as needed
+        var DISTANCE = 200.0 // in
+        var MAX_VEL = 61.7 // adjust as needed
+        var MAX_ACCEL = 61.7 // adjust as needed
+        var kV = 0.7018 // adjust as needed
+        var kA = 0.00037 // adjust as needed
+        var kStatic = 0.2166// adjust as needed
         var RUN_USING_ENCODER = false // adjust as needed
 
         private fun generateProfile(movingForward: Boolean): MotionProfile {

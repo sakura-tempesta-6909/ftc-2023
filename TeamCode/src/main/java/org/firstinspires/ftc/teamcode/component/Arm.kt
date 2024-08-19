@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.state.State
 import org.firstinspires.ftc.teamcode.subClass.Const
+import java.sql.Time
+import kotlin.jvm.Throws
 import kotlin.math.abs
 
 class Arm(hardwareMap: HardwareMap) : Component {
