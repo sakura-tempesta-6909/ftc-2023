@@ -21,6 +21,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -61,17 +62,19 @@ public class SampleTankDrive extends TankDrive {
     public static double VX_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
-    private TrajectorySequenceRunner trajectorySequenceRunner;
+    private final TrajectorySequenceRunner trajectorySequenceRunner;
 
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
     private static final TrajectoryAccelerationConstraint accelConstraint = getAccelerationConstraint(MAX_ACCEL);
 
-    private TrajectoryFollower follower;
+    private final TrajectoryFollower follower;
 
-    private List<DcMotorEx> motors, leftMotors, rightMotors;
-    private IMU imu;
+    private final List<DcMotorEx> motors;
+    private final List<DcMotorEx> leftMotors;
+    private final List<DcMotorEx> rightMotors;
+    private final IMU imu;
 
-    private VoltageSensor batteryVoltageSensor;
+    private final VoltageSensor batteryVoltageSensor;
 
     public SampleTankDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
@@ -120,7 +123,8 @@ public class SampleTankDrive extends TankDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
 

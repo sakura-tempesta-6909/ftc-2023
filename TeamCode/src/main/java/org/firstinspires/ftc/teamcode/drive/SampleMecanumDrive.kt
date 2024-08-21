@@ -91,14 +91,14 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) :
         rightRear.direction = Const.Drive.Direction.rightRear
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront) as List<DcMotorEx>
 
-        leftFront.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        rightFront.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        leftRear.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        rightRear.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        leftFront.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        rightFront.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        leftRear.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        rightRear.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        leftFront.mode = RunMode.STOP_AND_RESET_ENCODER
+        rightFront.mode = RunMode.STOP_AND_RESET_ENCODER
+        leftRear.mode = RunMode.STOP_AND_RESET_ENCODER
+        rightRear.mode = RunMode.STOP_AND_RESET_ENCODER
+        leftFront.mode = RunMode.RUN_USING_ENCODER
+        rightFront.mode = RunMode.RUN_USING_ENCODER
+        leftRear.mode = RunMode.RUN_USING_ENCODER
+        rightRear.mode = RunMode.RUN_USING_ENCODER
 
         for (motor in motors) {
             val motorConfigurationType = motor.motorType.clone()
@@ -257,7 +257,7 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) :
         return wheelPositions
     }
 
-    override fun getWheelVelocities(): List<Double>? {
+    override fun getWheelVelocities(): List<Double> {
         lastEncVels.clear()
         val wheelVelocities: MutableList<Double> = ArrayList()
         for (motor in motors) {
@@ -278,15 +278,15 @@ class SampleMecanumDrive(hardwareMap: HardwareMap) :
     public override val rawExternalHeading: Double
         get() = imu.robotYawPitchRollAngles.getYaw(AngleUnit.RADIANS)
 
-    override fun getExternalHeadingVelocity(): Double? {
+    override fun getExternalHeadingVelocity(): Double {
         return imu.getRobotAngularVelocity(AngleUnit.RADIANS).xRotationRate.toDouble()
     }
 
     companion object {
         @JvmField
-        var TRANSLATIONAL_PID = PIDCoefficients(0.0, 0.0, 0.0)
+        var TRANSLATIONAL_PID = PIDCoefficients(6.0, 0.0, 1.0)
         @JvmField
-        var HEADING_PID = PIDCoefficients(0.0, 0.0, 0.0)
+        var HEADING_PID = PIDCoefficients(8.0, 0.0, 0.0)
         @JvmField
         var LATERAL_MULTIPLIER = 1.0
         var VX_WEIGHT = 1.0
