@@ -9,8 +9,8 @@ class Const {
             //モーターの名前
             class Name {
                 companion object {
-                    const val Right = "slider_right"
-                    const val Left = "slider_left"
+                    const val Right = "rightSlider"
+                    const val Left = "leftSlider"
                 }
             }
 
@@ -49,9 +49,9 @@ class Const {
         class Motor {
             class Name {
                 companion object {
-                    const val holder = "holder_servo"
-                    const val lift = "lift_motor"
-                    const val flip = "flip_servo"
+                    const val holder = "holder"
+                    const val lift = "lift"
+                    const val flip = "flip"
                 }
             }
 
@@ -106,7 +106,7 @@ class Const {
     class Drone{
         class Name{
             companion object{
-                const val droneLauncher = "drone_servo"
+                const val droneLauncher = "drone"
             }
         }
 

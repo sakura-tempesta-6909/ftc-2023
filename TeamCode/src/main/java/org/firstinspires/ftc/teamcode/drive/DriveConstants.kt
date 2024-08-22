@@ -66,11 +66,11 @@ object DriveConstants {
      * empirically tuned.
      */
     @JvmField
-    var kV = 50.0 / rpmToVelocity(MAX_RPM)
+    var kV = 0.0162022455
     @JvmField
-    var kA = 0.0
+    var kA = 0.02
     @JvmField
-    var kStatic = 0.0
+    var kStatic = 0.1
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,

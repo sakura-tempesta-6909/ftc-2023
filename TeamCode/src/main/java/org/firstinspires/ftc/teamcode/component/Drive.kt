@@ -38,8 +38,8 @@ class Drive(hardwareMap: HardwareMap) : Component {
         imu.resetYaw()
         val parameters = IMU.Parameters(
                 RevHubOrientationOnRobot(
-                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                        RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+                        RevHubOrientationOnRobot.UsbFacingDirection.UP
                 )
         )
         imu.initialize(parameters)
