@@ -52,6 +52,7 @@ object DriveConstants {
     @JvmField
     //b
     var WHEEL_RADIUS = 1.89 // in
+
     @JvmField
     //b
     var GEAR_RATIO = 1.0 // output (wheel) speed / input (motor) speed
@@ -68,7 +69,7 @@ object DriveConstants {
     @JvmField
     var kV = 0.0162022455
     @JvmField
-    var kA = 0.02
+    var kA = 0.002
     @JvmField
     var kStatic = 0.1
 
@@ -92,9 +93,9 @@ object DriveConstants {
      * Adjust the orientations here to match your robot. See the FTC SDK documentation for details.
      */
     @JvmField
-    var LOGO_FACING_DIR = LogoFacingDirection.BACKWARD
+    var LOGO_FACING_DIR = LogoFacingDirection.FORWARD
     @JvmField
-    var USB_FACING_DIR = UsbFacingDirection.RIGHT
+    var USB_FACING_DIR = UsbFacingDirection.UP
     @JvmStatic
     fun encoderTicksToInches(ticks: Double): Double {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV

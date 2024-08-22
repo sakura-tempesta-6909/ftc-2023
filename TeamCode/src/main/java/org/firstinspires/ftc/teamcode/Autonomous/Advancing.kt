@@ -33,10 +33,12 @@ class Advancing : OpMode() {
         components.add(Drone(hardwareMap))
         state.stateInit()
         drive = SampleMecanumDrive(hardwareMap)
-        val startPose = Pose2d(0.0,0.0,Math.toRadians(0.0))
+        val startPose = Pose2d(-36.0,60.0,Math.toRadians(-90.0))
         drive.poseEstimate = startPose
         traj1 = drive.trajectorySequenceBuilder(startPose)
-            .lineToLinearHeading(Pose2d(0.0,10.0,Math.toRadians(0.0)))
+            .lineToLinearHeading(Pose2d(-36.0,12.0,Math.toRadians(-90.0)))
+            .waitSeconds(0.1)
+            .lineToSplineHeading(Pose2d(0.0,12.0,Math.toRadians(0.0)))
             .build()
         drive.followTrajectorySequenceAsync(traj1)
         telemetry.addData("Status", "Initialized")
@@ -61,7 +63,6 @@ class Advancing : OpMode() {
     override fun start() {
         runtime.reset()
         state.stateInit()
-
     }
 
     /*
