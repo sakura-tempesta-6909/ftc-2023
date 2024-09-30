@@ -34,6 +34,10 @@ class State {
     var botHeading = 0.0
     var initialize = false
     var botheadingIsZero = true
+    var detectedObject = ""
+    var pixelPosition = ""
+    var left = 0.0
+    var right = 0.0
 
     fun stateInit() {
         sliderState = SliderStates.Disable
@@ -65,12 +69,18 @@ class State {
         botHeading = 0.0
         initialize = false
         botheadingIsZero = true
+        detectedObject = ""
+        pixelPosition = ""
+        left = 0.0
+        right = 0.0
     }
 
     fun stateReset() {
         leftSliderCurrentPosition = 0
         rightSliderCurrentPosition = 0
         liftCurrentPosition = 0
+        detectedObject = ""
+        pixelPosition = ""
     }
 }
 
